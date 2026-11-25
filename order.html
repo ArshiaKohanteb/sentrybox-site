@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SentryBox | Options and how it works</title>
-<meta name="description" content="Choose your SentryBox: eight HD bullet cameras or two to three 4K cameras, solar or power pole, with battery backup and AI video detection as add-ons.">
+<meta name="description" content="Choose your SentryBox: eight HD bullet cameras or two to three 4K cameras, solar or power pole, with battery backup, AI video detection and installation as add-ons.">
 <meta name="theme-color" content="#08090b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,11 +76,14 @@ h3 { font-size: clamp(1.35rem, 2vw, 1.75rem); letter-spacing: -0.03em; line-heig
 .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .card { position: relative; display: flex; flex-direction: column; gap: 14px; min-height: 100%; padding: clamp(22px, 2.6vw, 36px); border-radius: 24px; background: var(--panel); border: 1.5px solid var(--line); cursor: pointer; transition: border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease); }
 .card input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.card .ph { margin: calc(-1 * clamp(22px, 2.6vw, 36px)) calc(-1 * clamp(22px, 2.6vw, 36px)) 8px; border-radius: 22px 22px 0 0; overflow: hidden; aspect-ratio: 16 / 9; }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; }
+.cards.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .card svg { width: clamp(56px, 6vw, 84px); height: auto; color: var(--ink); margin-bottom: clamp(8px, 2vw, 28px); }
 .card p { color: var(--soft); max-width: 26rem; }
 .card .fee { align-self: flex-start; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); font: 500 .85rem/1 var(--body); color: var(--ink); }
 /* the tick in the corner */
-.card::after { content: ""; position: absolute; top: 20px; right: 20px; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / .28); background: center / 16px no-repeat; transition: background-color 160ms ease, border-color 160ms ease; }
+.card::after { content: ""; position: absolute; z-index: 1; top: 20px; right: 20px; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / .6); background: rgb(8 9 11 / .35) center / 16px no-repeat; transition: background-color 160ms ease, border-color 160ms ease; }
 .card.box::after { border-radius: 8px; }
 .card:has(input:checked) { border-color: var(--red-btn); background: rgb(225 32 44 / .08); }
 .card:has(input:checked)::after { border-color: var(--red-btn); background-color: var(--red-btn); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E"); }
@@ -116,6 +119,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   .top img { max-width: 340px; }
   .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
 }
+@media (max-width: 1000px) { .cards.three { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 620px) {
   .cards { grid-template-columns: minmax(0, 1fr); }
   .pick legend { flex-wrap: wrap; gap: 8px 14px; }
@@ -145,7 +149,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   <div class="wrap">
     <div class="top-copy">
       <h1>Build your box.</h1>
-      <p class="sub">Three choices. We build it, set it up and send it ready to mount.</p>
+      <p class="sub">Three choices. We build it, set it up and send it ready to go.</p>
     </div>
     <figure><img src="assets/sentrybox-cut.webp" width="1417" height="1372" alt="SentryBox: a grey weatherproof enclosure with cameras around it and blue and red light bars on the front"></figure>
   </div>
@@ -182,13 +186,13 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
       <div class="cards">
         <label class="card">
           <input type="radio" name="power" value="solar" data-label="Solar" checked>
-          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="66" cy="14" r="7"/><path d="M66 1v3M66 24v3M53 14h3M76 14h3M57 5l2 2M73 21l2 2M75 5l-2 2"/><path d="M8 52l8-28h36l8 28zM12 38h44M30 24l-4 28M40 24l4 28"/></svg>
+          <span class="ph"><img src="assets/scene-solar-sm.webp" width="1200" height="679" style="object-position:70% 45%" alt="A SentryBox on a pole with a solar panel behind it"></span>
           <h3>Solar</h3>
           <p>No power on site needed.</p>
         </label>
         <label class="card">
           <input type="radio" name="power" value="pole" data-label="Power pole">
-          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M42 4v50M26 12h32M30 20h24M2 16c10 6 16 4 24-4M82 16c-10 6-16 4-24-4"/><rect x="46" y="30" width="16" height="14" rx="2.5"/></svg>
+          <span class="ph"><img src="assets/install-2.webp" width="666" height="960" style="object-position:50% 58%" alt="A SentryBox mounted on a temporary power pole at a jobsite"></span>
           <h3>Power pole</h3>
           <p>Runs off your temporary power.</p>
         </label>
@@ -201,7 +205,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   <div class="wrap">
     <fieldset>
       <legend><span class="num">03</span><h2>Add-ons</h2><small>Optional</small></legend>
-      <div class="cards">
+      <div class="cards three">
         <label class="card box">
           <input type="checkbox" name="battery" value="1" data-label="Battery backup" id="battery">
           <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="12" width="60" height="32" rx="6"/><path d="M68 22h6v12h-6M40 18l-8 11h10l-4 9"/></svg>
@@ -214,6 +218,12 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
           <h3>AI video detection</h3>
           <p>Smart detection on your video.</p>
           <span class="fee">Monthly fee</span>
+        </label>
+        <label class="card box">
+          <input type="checkbox" name="install" value="1" data-label="Installation">
+          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4v48M12 52h16"/><rect x="26" y="12" width="24" height="18" rx="3"/><path d="M58 44l14-14M66 24a8 8 0 0 0 10 10l-6-2-2-6z"/></svg>
+          <h3>Installation</h3>
+          <p>We mount it and get it running on site.</p>
         </label>
       </div>
     </fieldset>
@@ -229,7 +239,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
       <li><h3>Send your picks</h3><p>Tell us about the site.</p></li>
       <li><h3>We quote it</h3><p>Pricing and availability for your setup.</p></li>
       <li><h3>We build it</h3><p>Configured and tested before it leaves.</p></li>
-      <li><h3>You mount it</h3><p>Installation is available when it's quoted on your invoice.</p></li>
+      <li><h3>It goes up</h3><p>Mount it yourself, or add installation.</p></li>
     </ol>
     <p class="sub price">We go over pricing with you when we quote.</p>
   </div>

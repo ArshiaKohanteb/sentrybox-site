@@ -6,6 +6,12 @@
 <title>SentryBox | Secure your jobsite from anywhere</title>
 <meta name="description" content="SentryBox is a jobsite security box with cameras, its own internet and red and blue strobes in one weatherproof enclosure. Solar or power pole.">
 <meta name="theme-color" content="#08090b">
+<meta property="og:title" content="SentryBox | Secure your jobsite from anywhere">
+<meta property="og:description" content="Cameras, internet and police-style strobes in one box. Solar or power pole.">
+<meta property="og:image" content="https://sentrysecurityla.com/assets/scene-dusk.webp">
+<meta property="og:url" content="https://sentrysecurityla.com/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308090b'/%3E%3Crect x='10' y='27' width='20' height='10' rx='5' fill='%232b6bff'/%3E%3Crect x='34' y='27' width='20' height='10' rx='5' fill='%23e1202c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap">
@@ -108,6 +114,43 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
   html.js .rv.in { opacity: 1; transform: none; }
 }
 
+
+/* time rail: where you are in the night */
+.rail { position: fixed; z-index: 35; right: max(18px, env(safe-area-inset-right, 0px)); top: 50%; translate: 0 -50%; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 300ms ease; }
+.rail.show { opacity: 1; }
+.rail li { display: flex; align-items: center; gap: 10px; font: 600 .78rem/1 var(--display); font-variant-numeric: tabular-nums; color: rgb(255 255 255 / .55); text-shadow: 0 1px 8px rgb(0 0 0 / .8); transition: color 250ms ease; }
+.rail li::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: rgb(255 255 255 / .45); transition: background-color 250ms ease, scale 250ms var(--ease), box-shadow 250ms ease; }
+.rail li.on { color: #fff; }
+.rail li.on::after { background: var(--red-btn); scale: 1.5; box-shadow: 0 0 0 4px rgb(225 32 44 / .3); }
+
+/* solar: daylight, with a glass card over the sky */
+.solar { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; background: #2a62c9; }
+.solar .shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%; }
+.solar .wrap { position: relative; width: 100%; padding-block: calc(var(--nav) + 24px) 48px; }
+.glass { width: min(480px, 100%); display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding: clamp(24px, 3vw, 44px); border-radius: 32px; background: linear-gradient(160deg, rgb(12 26 60 / .5), rgb(12 26 60 / .3)); border: 1px solid rgb(255 255 255 / .42); box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 30px 60px rgb(6 20 60 / .28); -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); color: #fff; }
+.glass .sub { color: rgb(255 255 255 / .86); }
+.glass ul { width: 100%; margin: 4px 0; padding: 0; list-style: none; border-top: 1px solid rgb(255 255 255 / .3); }
+.glass li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgb(255 255 255 / .3); }
+.glass li b { font: 600 1.15rem/1.2 var(--display); letter-spacing: -0.02em; }
+.glass li span { color: rgb(255 255 255 / .82); text-align: right; font-size: .98rem; }
+.btn-w { background: #fff; color: #0b1020; }
+@media (hover: hover) and (pointer: fine) { .btn-w:hover { background: #e9edf5; } }
+
+/* quote form: two fields, tap what you want, send */
+.chips { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; border: 0; margin: 4px 0 0; padding: 0; min-width: 0; }
+.chips legend { padding: 0; margin-bottom: 12px; font: 500 .9rem/1.2 var(--body); color: var(--soft); }
+.chip { position: relative; cursor: pointer; }
+.chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.chip span { display: inline-flex; align-items: center; min-height: 42px; padding: 0 16px; border-radius: 999px; border: 1px solid rgb(255 255 255 / .22); font: 500 .95rem/1 var(--body); transition: background-color 140ms ease, border-color 140ms ease, transform 140ms var(--ease); }
+.chip input:checked + span { background: var(--red-btn); border-color: var(--red-btn); }
+.chip input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+.chip:active span { transform: scale(.96); }
+.more { grid-column: 1 / -1; }
+.more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 32px; color: var(--soft); font-size: .95rem; text-decoration: underline; text-underline-offset: 3px; }
+.more summary::-webkit-details-marker { display: none; }
+.more textarea { width: 100%; margin-top: 10px; min-height: 84px; padding: 13px 14px; font: 400 1rem/1.4 var(--body); color: var(--ink); background: var(--bg); border: 1px solid rgb(255 255 255 / .18); border-radius: 12px; resize: vertical; }
+.more textarea:focus-visible { outline: none; border-color: var(--red); }
+
 section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; }
 
 /* the box */
@@ -126,10 +169,6 @@ section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; }
 .facts li::before { content: ""; width: 44px; height: 2px; background: var(--red-btn); margin-bottom: 8px; }
 .box-foot { margin: clamp(40px, 6vw, 72px) auto 0; }
 .box-cta { margin-top: 24px; }
-.checks { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px 24px; border: 0; margin: 0; padding: 0; }
-.checks legend { padding: 0; margin-bottom: 10px; font: 500 .9rem/1.2 var(--body); color: var(--soft); }
-.checks label { display: inline-flex; align-items: center; gap: 10px; min-height: 28px; cursor: pointer; }
-.checks input { width: 20px; height: 20px; accent-color: var(--red-btn); }
 
 /* on a real site + setup */
 .real .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 7vw, 112px); align-items: center; }
@@ -175,6 +214,11 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 
 @media (max-width: 900px) {
   :root { --nav: 60px; }
+  .rail { display: none; }
+  .solar { align-items: flex-end; }
+  .solar .shot { object-position: 72% 0%; height: 68%; }
+  .solar .wrap { padding-block: 0 28px; }
+  .glass { width: 100%; border-radius: 26px; }
   .nav nav a:not(.btn) { display: none; }
   .box-stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .box-stage figure { grid-column: 1 / -1; order: -1; max-width: 460px; margin-inline: auto; }
@@ -194,7 +238,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   html { scroll-behavior: auto; }
   .wash i { animation: none; }
   .wash { display: none; }
-  .btn, .ghost::after, .faq summary::after { transition: none; }
+  .btn, .ghost::after, .faq summary::after, .chip span, .rail, .rail li, .rail li::after { transition: none; }
 }
 </style>
 </head>
@@ -214,6 +258,8 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 </header>
 
 <main id="top">
+
+<ol class="rail" id="rail" aria-hidden="true"><li>Dusk</li><li>2:14</li><li>2:15</li><li>2:16</li><li>6:00</li></ol>
 
 <div class="reel">
   <div class="scene in" style="--ox:83%">
@@ -267,6 +313,21 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   </section>
 </div>
 
+<section class="solar" id="solar" aria-label="Solar option">
+  <picture><source media="(max-width: 700px)" srcset="assets/scene-solar-sm.webp"><img class="shot" src="assets/scene-solar.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="A SentryBox on a steel pole in daylight with a large solar panel mounted behind it against a blue sky"></picture>
+  <div class="wrap">
+    <div class="glass rv">
+      <h2>Runs on sun.</h2>
+      <p class="sub">No power on site? No problem.</p>
+      <ul>
+        <li><b>Solar</b><span>Works anywhere</span></li>
+        <li><b>Power pole</b><span>Battery backup available</span></li>
+      </ul>
+      <a class="btn btn-w" href="order.html">See your options</a>
+    </div>
+  </div>
+</section>
+
 <section class="sec box" id="box">
   <div class="wrap">
     <h2 class="rv">Everything in one box.</h2>
@@ -300,7 +361,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
         <li class="rv" style="--d:2">Wait three minutes</li>
         <li class="rv" style="--d:3">Watch from your phone</li>
       </ol>
-      <p class="sub rv">It arrives built, configured and tested, ready for you to mount.</p>
+      <p class="sub rv">It arrives built, configured and tested. Mount it yourself, or add installation.</p>
     </div>
   </div>
 </section>
@@ -315,7 +376,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
       </details>
       <details>
         <summary>Do you install it?</summary>
-        <p>The box arrives built, configured and tested, and you mount it. We install only when installation is quoted on your invoice.</p>
+        <p>Installation is an option you can add to your quote. Without it, the box arrives built, configured and tested, and you mount it.</p>
       </details>
       <details>
         <summary>What happens when the power goes out?</summary>
@@ -338,26 +399,25 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   <div class="wrap">
     <div class="close-copy">
       <h2 class="rv">Don't wait for the <em>first break-in.</em></h2>
-      <p class="sub rv" style="--d:1">Tell us about your site. We'll come back with a quote and availability.</p>
+      <p class="sub rv" style="--d:1">Leave a name and a way to reach you. We'll come back with a quote.</p>
     </div>
     <form id="quote-form" class="rv" style="--d:1" novalidate>
       <div class="f"><label for="q-name">Name</label><input id="q-name" name="name" autocomplete="name" required></div>
       <div class="f"><label for="q-contact">Phone or email</label><input id="q-contact" name="contact" autocomplete="email" required></div>
-      <div class="f"><label for="q-units">How many boxes?</label>
-        <select id="q-units" name="units"><option>1</option><option>2</option><option>3</option><option>4</option><option>5 or more</option></select>
-      </div>
-      <div class="f"><label for="q-cams">Cameras</label>
-        <select id="q-cams" name="cameras"><option value="hd">8 HD bullet cameras</option><option value="4k">2 to 3 4K cameras</option><option value="">Not sure yet</option></select>
-      </div>
-      <div class="f"><label for="q-power">Power</label>
-        <select id="q-power" name="power"><option value="solar">Solar</option><option value="pole">Power pole</option><option value="">Not sure yet</option></select>
-      </div>
-      <div class="f"><label for="q-site">Where is the site?</label><input id="q-site" name="site" placeholder="City or address" autocomplete="street-address"></div>
-      <fieldset class="checks"><legend>Add-ons</legend>
-        <label><input type="checkbox" name="battery" id="q-battery"> Battery backup (power pole)</label>
-        <label><input type="checkbox" name="ai" id="q-ai"> AI video detection (monthly)</label>
+      <fieldset class="chips">
+        <legend>Tap what you want (optional)</legend>
+        <label class="chip"><input type="checkbox" name="want" value="8 HD cameras" data-k="cams=hd"><span>8 HD cameras</span></label>
+        <label class="chip"><input type="checkbox" name="want" value="2 to 3 4K cameras" data-k="cams=4k"><span>4K cameras</span></label>
+        <label class="chip"><input type="checkbox" name="want" value="Solar" data-k="power=solar"><span>Solar</span></label>
+        <label class="chip"><input type="checkbox" name="want" value="Power pole" data-k="power=pole"><span>Power pole</span></label>
+        <label class="chip"><input type="checkbox" name="want" value="Battery backup" data-k="battery=1"><span>Battery backup</span></label>
+        <label class="chip"><input type="checkbox" name="want" value="AI video detection" data-k="ai=1"><span>AI detection</span></label>
+        <label class="chip"><input type="checkbox" name="want" value="Installation" data-k="install=1"><span>Installation</span></label>
       </fieldset>
-      <div class="f full"><label for="q-msg">Anything we should know</label><textarea id="q-msg" name="msg" placeholder="Type of site, timeline, anything unusual"></textarea></div>
+      <details class="more">
+        <summary>Add a note</summary>
+        <textarea id="q-msg" name="msg" aria-label="Note" placeholder="Where the site is, how many boxes, timeline"></textarea>
+      </details>
       <button class="btn" type="submit">Get a quote</button>
       <p class="note" id="form-note" role="status"></p>
     </form>
@@ -396,16 +456,23 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 
   // choices carried over from the options page
   var q = new URLSearchParams(location.search);
-  $('q-cams').value = q.has('cams') ? q.get('cams') : '';
-  $('q-power').value = q.has('power') ? q.get('power') : '';
-  $('q-battery').checked = q.get('battery') === '1';
-  $('q-ai').checked = q.get('ai') === '1';
+  [].forEach.call(document.querySelectorAll('.chip input'), function (c) {
+    var kv = c.dataset.k.split('=');
+    c.checked = q.get(kv[0]) === kv[1];
+  });
 
   var nav = $('nav');
   // the nav stays clear over the pictures and turns solid once the reel has passed
   var reel = document.querySelector('.reel');
-  var onScroll = function () { nav.classList.toggle('solid', reel.getBoundingClientRect().bottom < nav.offsetHeight + 4); };
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  var rail = $('rail'), marks = [].slice.call(rail.children);
+  var onScroll = function () {
+    var r = reel.getBoundingClientRect();
+    nav.classList.toggle('solid', r.bottom < nav.offsetHeight + 4);
+    rail.classList.toggle('show', r.bottom > innerHeight * 0.6);
+    var i = Math.min(marks.length - 1, Math.max(0, Math.round(-r.top / innerHeight)));
+    marks.forEach(function (m, k) { m.classList.toggle('on', k === i); });
+  };
+  addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll); onScroll();
 
   if (!('IntersectionObserver' in window)) { document.querySelectorAll('.scene, .rv').forEach(function (el) { el.classList.add('in'); }); return; }
   var scenes = new IntersectionObserver(function (es) {

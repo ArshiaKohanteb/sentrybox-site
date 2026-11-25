@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SentryBox | Secure your jobsite from anywhere</title>
-<meta name="description" content="SentryBox is a jobsite security box with cameras, its own internet, backup power and red and blue strobes, all in one weatherproof enclosure.">
+<meta name="description" content="SentryBox is a jobsite security box with cameras, its own internet and red and blue strobes in one weatherproof enclosure. Solar or power pole.">
 <meta name="theme-color" content="#08090b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -125,6 +125,11 @@ section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; }
 .facts span { color: var(--soft); max-width: 15rem; }
 .facts li::before { content: ""; width: 44px; height: 2px; background: var(--red-btn); margin-bottom: 8px; }
 .box-foot { margin: clamp(40px, 6vw, 72px) auto 0; }
+.box-cta { margin-top: 24px; }
+.checks { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px 24px; border: 0; margin: 0; padding: 0; }
+.checks legend { padding: 0; margin-bottom: 10px; font: 500 .9rem/1.2 var(--body); color: var(--soft); }
+.checks label { display: inline-flex; align-items: center; gap: 10px; min-height: 28px; cursor: pointer; }
+.checks input { width: 20px; height: 20px; accent-color: var(--red-btn); }
 
 /* on a real site + setup */
 .real .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 7vw, 112px); align-items: center; }
@@ -135,13 +140,6 @@ section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; }
 .steps li { counter-increment: s; display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); align-items: baseline; padding: clamp(18px, 2.2vw, 28px) 0; border-bottom: 1px solid var(--line); font: 600 clamp(1.35rem, 2.4vw, 2.1rem)/1.1 var(--display); letter-spacing: -0.03em; }
 .steps li::before { content: "0" counter(s); font-size: .55em; font-weight: 600; letter-spacing: 0; color: var(--red); font-variant-numeric: tabular-nums; }
 .real .sub { margin-top: 24px; }
-.term { display: flex; flex-direction: column; gap: 6px; margin-top: 28px; padding: 20px 22px; border: 1px solid rgb(255 59 71 / .55); border-left-width: 4px; border-radius: 14px; background: rgb(225 32 44 / .09); }
-.term b { font: 700 clamp(1.15rem, 1.6vw, 1.35rem)/1.2 var(--display); letter-spacing: -0.02em; }
-.term span { color: #d9dbe0; }
-form .term { grid-column: 1 / -1; margin-top: 0; padding: 14px 16px; }
-form .term b { font-size: 1rem; }
-form .term span { font-size: .92rem; }
-.terms { max-width: 46rem; }
 
 /* questions */
 .faq-wrap { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(28px, 6vw, 96px); align-items: start; }
@@ -208,7 +206,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     <nav aria-label="Main">
       <a href="#night">A night on site</a>
       <a href="#box">The box</a>
-      <a href="#setup">Setup</a>
+      <a href="order.html">Options</a>
       <a href="#questions">Questions</a>
       <a class="btn btn-s" href="#quote">Get a quote</a>
     </nav>
@@ -222,7 +220,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     <picture><source media="(max-width: 700px)" srcset="assets/scene-dusk-sm.webp"><img class="shot" src="assets/scene-dusk.webp" width="2400" height="1357" fetchpriority="high" alt="A SentryBox mounted on a temporary power pole at dusk, overlooking a wood-framed house under construction, its blue and red light bars lit"></picture>
     <div class="wrap cap">
       <h1>Secure your jobsite from anywhere.</h1>
-      <p class="sub">Cameras, internet, backup power and police-style strobes. In one box.</p>
+      <p class="sub">Cameras, internet and police-style strobes. In one box.</p>
       <div class="actions">
         <a class="btn" href="#quote">Get a quote</a>
         <a class="ghost" href="#night">Watch a night on site</a>
@@ -275,7 +273,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     <div class="box-stage">
       <ul class="facts l">
         <li class="rv"><b>4G LTE</b><span>Its own internet. SIM and data plan included.</span></li>
-        <li class="rv" style="--d:1"><b>30+ min</b><span>Battery takes over when the power is cut.</span></li>
+        <li class="rv" style="--d:1"><b>30+ min</b><span>Add battery backup and it runs through a power cut.</span></li>
       </ul>
       <figure class="rv"><img src="assets/sentrybox-cut.webp" width="1417" height="1372" loading="lazy" alt="SentryBox: a grey weatherproof enclosure with cameras around it and blue and red light bars on the front"></figure>
       <ul class="facts r">
@@ -283,26 +281,26 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
         <li class="rv" style="--d:1"><b>IP67</b><span>Sealed against rain and dust.</span></li>
       </ul>
     </div>
-    <p class="sub box-foot rv">Eight HD bullet cameras, or two to three in 4K.</p>
+    <p class="sub box-foot rv">Eight HD bullet cameras, or two to three in 4K. Solar or power pole.</p>
+    <p class="box-cta rv"><a class="btn" href="order.html">See your options</a></p>
   </div>
 </section>
 
 <section class="sec real" id="setup">
   <div class="wrap">
     <figure class="rv">
-      <img src="assets/install.webp" width="666" height="960" loading="lazy" alt="A SentryBox mounted high on a temporary power pole at a construction site, with cameras around the enclosure and strobe bars on the front">
+      <img src="assets/install-2.webp" width="666" height="960" loading="lazy" alt="A SentryBox mounted high on a temporary power pole at a construction site, with cameras around the enclosure and strobe bars on the front">
       <figcaption class="tag">On a live jobsite</figcaption>
     </figure>
     <div>
       <h2 class="rv">Up in minutes.</h2>
       <ol class="steps">
         <li class="rv">Mount it out of reach</li>
-        <li class="rv" style="--d:1">Plug in the power</li>
+        <li class="rv" style="--d:1">Connect power</li>
         <li class="rv" style="--d:2">Wait three minutes</li>
         <li class="rv" style="--d:3">Watch from your phone</li>
       </ol>
-      <p class="sub rv">It arrives built, configured and tested.</p>
-      <p class="term rv"><b>You mount it.</b><span>Mounting is your responsibility. We only install when installation is quoted on your invoice.</span></p>
+      <p class="sub rv">It arrives built, configured and tested, ready for you to mount.</p>
     </div>
   </div>
 </section>
@@ -315,13 +313,13 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
         <summary>Does it come with cameras?</summary>
         <p>Yes. Choose eight HD bullet cameras or two to three 4K cameras, mounted on the box and ready to go. If you already have cameras you like, ask us about a box without them.</p>
       </details>
-      <details open>
+      <details>
         <summary>Do you install it?</summary>
-        <p>No, unless installation is quoted on your invoice. The box arrives built, configured and tested, and you are expected to mount it.</p>
+        <p>The box arrives built, configured and tested, and you mount it. We install only when installation is quoted on your invoice.</p>
       </details>
       <details>
         <summary>What happens when the power goes out?</summary>
-        <p>The battery takes over and keeps the box running for 30 minutes or more. The cameras stay connected during that window.</p>
+        <p>With the battery backup add-on, the battery takes over and keeps the box running for 30 minutes or more. The solar option does not depend on site power at all.</p>
       </details>
       <details>
         <summary>Where can I mount it?</summary>
@@ -349,11 +347,17 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
         <select id="q-units" name="units"><option>1</option><option>2</option><option>3</option><option>4</option><option>5 or more</option></select>
       </div>
       <div class="f"><label for="q-cams">Cameras</label>
-        <select id="q-cams" name="cameras"><option>8 HD bullet cameras</option><option>2 to 3 4K cameras</option><option>No cameras, I have my own</option><option>Not sure yet</option></select>
+        <select id="q-cams" name="cameras"><option value="hd">8 HD bullet cameras</option><option value="4k">2 to 3 4K cameras</option><option value="">Not sure yet</option></select>
       </div>
-      <div class="f full"><label for="q-site">Where is the site?</label><input id="q-site" name="site" placeholder="City or address" autocomplete="street-address"></div>
-      <div class="f full"><label for="q-msg">Anything we should know</label><textarea id="q-msg" name="msg" placeholder="Type of site, timeline, HD or 4K cameras"></textarea></div>
-      <p class="term"><b>Mounting is not included.</b><span>You are expected to mount the box unless installation is quoted on your invoice.</span></p>
+      <div class="f"><label for="q-power">Power</label>
+        <select id="q-power" name="power"><option value="solar">Solar</option><option value="pole">Power pole</option><option value="">Not sure yet</option></select>
+      </div>
+      <div class="f"><label for="q-site">Where is the site?</label><input id="q-site" name="site" placeholder="City or address" autocomplete="street-address"></div>
+      <fieldset class="checks"><legend>Add-ons</legend>
+        <label><input type="checkbox" name="battery" id="q-battery"> Battery backup (power pole)</label>
+        <label><input type="checkbox" name="ai" id="q-ai"> AI video detection (monthly)</label>
+      </fieldset>
+      <div class="f full"><label for="q-msg">Anything we should know</label><textarea id="q-msg" name="msg" placeholder="Type of site, timeline, anything unusual"></textarea></div>
       <button class="btn" type="submit">Get a quote</button>
       <p class="note" id="form-note" role="status"></p>
     </form>
@@ -365,7 +369,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 <footer>
   <div class="wrap">
     <a class="mark" href="#top">Sentry<b>Box</b></a>
-    <span class="terms" id="terms">Terms: you are expected to mount the box yourself unless installation is quoted on your invoice.</span>
+    <a href="order.html">Options and how it works</a>
     <span>© <span id="yr">2026</span> SentryBox</span>
   </div>
 </footer>
@@ -389,6 +393,13 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
       .catch(function () { note.textContent = 'That did not send. Check your connection and try again.'; })
       .then(function () { btn.disabled = false; });
   });
+
+  // choices carried over from the options page
+  var q = new URLSearchParams(location.search);
+  $('q-cams').value = q.has('cams') ? q.get('cams') : '';
+  $('q-power').value = q.has('power') ? q.get('power') : '';
+  $('q-battery').checked = q.get('battery') === '1';
+  $('q-ai').checked = q.get('ai') === '1';
 
   var nav = $('nav');
   // the nav stays clear over the pictures and turns solid once the reel has passed

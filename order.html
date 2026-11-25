@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SentryBox | Options and how it works</title>
+<meta name="description" content="Choose your SentryBox: eight HD bullet cameras or two to three 4K cameras, solar or power pole, with battery backup and AI video detection as add-ons.">
+<meta name="theme-color" content="#08090b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Same world as the home page: dark, one red, one type system. This page is a picker: three choices,
+   a running summary at the bottom, then what happens after you ask for a quote. */
+:root {
+  --bg: #08090b;
+  --panel: #101216;
+  --line: rgb(255 255 255 / .12);
+  --ink: #f4f3ef;
+  --soft: #a7abb3;
+  --red: #ff3b47;
+  --red-btn: #e1202c;
+  --red-btn-hover: #f2303c;
+  --blue: #2b6bff;
+  --display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --body: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --side: clamp(20px, 5.5vw, 88px);
+  --nav: 68px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); scroll-behavior: smooth; scroll-padding-top: calc(var(--nav) + 16px); }
+body { margin: 0; padding-top: calc(var(--nav) + env(safe-area-inset-top, 0px)); background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0; text-wrap: pretty; }
+::selection { background: var(--red-btn); color: #fff; }
+:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.wrap { max-width: 1320px; margin-inline: auto; padding-left: max(var(--side), env(safe-area-inset-left, 0px)); padding-right: max(var(--side), env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.75rem, 6.6vw, 6rem); }
+h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); }
+h3 { font-size: clamp(1.35rem, 2vw, 1.75rem); letter-spacing: -0.03em; line-height: 1.1; }
+.sub { font-size: clamp(1.0625rem, 1.5vw, 1.3rem); line-height: 1.45; color: var(--soft); max-width: 34rem; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border: 0; border-radius: 999px; background: var(--red-btn); color: #fff; font: 600 1.0625rem/1 var(--body); text-decoration: none; cursor: pointer; white-space: nowrap; transition: background-color 160ms ease, transform 160ms var(--ease); }
+.btn:active { transform: scale(.97); }
+.btn-s { min-height: 42px; padding: 0 18px; font-size: .95rem; }
+@media (hover: hover) and (pointer: fine) { .btn:hover { background: var(--red-btn-hover); transform: translateY(-1px); } .btn:active { transform: scale(.97); } }
+
+.nav { position: fixed; inset: 0 0 auto 0; z-index: 40; height: calc(var(--nav) + env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px); background: rgb(8 9 11 / .82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.nav .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.mark { font: 700 1.35rem/1 var(--display); letter-spacing: -0.04em; text-decoration: none; }
+.mark b { color: var(--red); font-weight: 700; }
+.nav nav { display: flex; align-items: center; gap: 30px; }
+.nav nav a:not(.btn) { font-size: .95rem; font-weight: 500; text-decoration: none; opacity: .82; transition: opacity 150ms ease; }
+.nav nav a[aria-current] { opacity: 1; }
+@media (hover: hover) and (pointer: fine) { .nav nav a:not(.btn):hover { opacity: 1; } }
+
+/* top: headline beside the box */
+.top { position: relative; overflow: hidden; }
+.top .wrap { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; gap: clamp(24px, 5vw, 80px); padding-block: clamp(48px, 8vw, 112px) clamp(32px, 5vw, 64px); }
+.top-copy { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+.top figure { position: relative; margin: 0; }
+.top figure::before { content: ""; position: absolute; inset: -18%; background: radial-gradient(closest-side, rgb(43 107 255 / .22), rgb(225 32 44 / .1) 55%, transparent 72%); pointer-events: none; }
+.top img { position: relative; width: 100%; height: auto; max-width: 520px; margin-inline: auto; filter: drop-shadow(0 40px 50px rgb(0 0 0 / .6)); }
+
+/* the picker */
+.pick { padding-block: clamp(40px, 6vw, 80px); border-top: 1px solid var(--line); }
+.pick fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.pick legend { padding: 0; display: flex; align-items: baseline; gap: 18px; margin-bottom: clamp(24px, 3vw, 40px); }
+.num { font: 600 1rem/1 var(--display); color: var(--red); font-variant-numeric: tabular-nums; }
+.pick legend h2 { display: inline; }
+.pick legend small { font: 400 1rem/1.3 var(--body); letter-spacing: 0; color: var(--soft); }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card { position: relative; display: flex; flex-direction: column; gap: 14px; min-height: 100%; padding: clamp(22px, 2.6vw, 36px); border-radius: 24px; background: var(--panel); border: 1.5px solid var(--line); cursor: pointer; transition: border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease); }
+.card input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.card svg { width: clamp(56px, 6vw, 84px); height: auto; color: var(--ink); margin-bottom: clamp(8px, 2vw, 28px); }
+.card p { color: var(--soft); max-width: 26rem; }
+.card .fee { align-self: flex-start; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); font: 500 .85rem/1 var(--body); color: var(--ink); }
+/* the tick in the corner */
+.card::after { content: ""; position: absolute; top: 20px; right: 20px; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / .28); background: center / 16px no-repeat; transition: background-color 160ms ease, border-color 160ms ease; }
+.card.box::after { border-radius: 8px; }
+.card:has(input:checked) { border-color: var(--red-btn); background: rgb(225 32 44 / .08); }
+.card:has(input:checked)::after { border-color: var(--red-btn); background-color: var(--red-btn); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E"); }
+.card:has(input:focus-visible) { outline: 2px solid #fff; outline-offset: 3px; }
+.card:has(input:disabled) { opacity: .42; cursor: not-allowed; }
+.card:has(input:disabled) input { cursor: not-allowed; }
+.card:active:not(:has(input:disabled)) { transform: scale(.985); }
+@media (hover: hover) and (pointer: fine) { .card:hover:not(:has(input:checked)):not(:has(input:disabled)) { border-color: rgb(255 255 255 / .34); } }
+
+/* what happens next */
+.next { padding-block: clamp(56px, 8vw, 112px) clamp(120px, 14vw, 180px); border-top: 1px solid var(--line); }
+.flow { margin: clamp(28px, 4vw, 56px) 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.flow li { counter-increment: s; display: flex; flex-direction: column; gap: 10px; padding-top: 20px; border-top: 2px solid var(--red-btn); }
+.flow li::before { content: "0" counter(s); font: 600 1rem/1 var(--display); color: var(--red); font-variant-numeric: tabular-nums; }
+.flow p { color: var(--soft); }
+.price { margin-top: clamp(32px, 4vw, 56px); }
+
+/* running summary */
+.bar { position: fixed; inset: auto 0 0 0; z-index: 30; background: rgb(16 18 22 / .92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.bar-text { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.bar-text small { font: 500 .8rem/1 var(--body); color: var(--soft); }
+.bar-text b { font: 600 clamp(1rem, 1.5vw, 1.2rem)/1.25 var(--display); letter-spacing: -0.02em; }
+
+footer { border-top: 1px solid var(--line); color: var(--soft); font-size: .92rem; padding-bottom: 84px; }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-block: 28px; }
+footer .mark { color: var(--ink); font-size: 1.15rem; }
+
+@media (max-width: 900px) {
+  :root { --nav: 60px; }
+  .nav nav a:not(.btn) { display: none; }
+  .top .wrap { grid-template-columns: minmax(0, 1fr); }
+  .top img { max-width: 340px; }
+  .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+}
+@media (max-width: 620px) {
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  .pick legend { flex-wrap: wrap; gap: 8px 14px; }
+  .bar .btn { min-height: 46px; padding: 0 18px; font-size: .98rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn, .card, .card::after { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="./" aria-label="SentryBox home">Sentry<b>Box</b></a>
+    <nav aria-label="Main">
+      <a href="./#night">A night on site</a>
+      <a href="./#box">The box</a>
+      <a href="order.html" aria-current="page">Options</a>
+      <a href="./#questions">Questions</a>
+      <a class="btn btn-s" href="./#quote" data-quote>Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<div class="top">
+  <div class="wrap">
+    <div class="top-copy">
+      <h1>Build your box.</h1>
+      <p class="sub">Three choices. We build it, set it up and send it ready to mount.</p>
+    </div>
+    <figure><img src="assets/sentrybox-cut.webp" width="1417" height="1372" alt="SentryBox: a grey weatherproof enclosure with cameras around it and blue and red light bars on the front"></figure>
+  </div>
+</div>
+
+<form id="pick" novalidate>
+
+<section class="pick">
+  <div class="wrap">
+    <fieldset>
+      <legend><span class="num">01</span><h2>Cameras</h2></legend>
+      <div class="cards">
+        <label class="card">
+          <input type="radio" name="cams" value="hd" data-label="8 HD cameras" checked>
+          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g id="cam"><rect x="2" y="4" width="13" height="8" rx="2.5"/><path d="M15 6.5l3 1.5-3 1.5"/></g><use href="#cam" x="22"/><use href="#cam" x="44"/><use href="#cam" x="66"/><use href="#cam" y="18"/><use href="#cam" x="22" y="18"/><use href="#cam" x="44" y="18"/><use href="#cam" x="66" y="18"/></svg>
+          <h3>8 HD bullet cameras</h3>
+          <p>Eyes on every corner of the site.</p>
+        </label>
+        <label class="card">
+          <input type="radio" name="cams" value="4k" data-label="2 to 3 4K cameras">
+          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g id="big"><rect x="2" y="6" width="26" height="16" rx="5"/><circle cx="21" cy="14" r="4"/><path d="M28 10l6 4-6 4"/></g><use href="#big" x="44"/><use href="#big" x="22" y="26" opacity=".45"/></svg>
+          <h3>2 to 3 4K cameras</h3>
+          <p>Fewer cameras, sharper picture.</p>
+        </label>
+      </div>
+    </fieldset>
+  </div>
+</section>
+
+<section class="pick">
+  <div class="wrap">
+    <fieldset>
+      <legend><span class="num">02</span><h2>Power</h2></legend>
+      <div class="cards">
+        <label class="card">
+          <input type="radio" name="power" value="solar" data-label="Solar" checked>
+          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="66" cy="14" r="7"/><path d="M66 1v3M66 24v3M53 14h3M76 14h3M57 5l2 2M73 21l2 2M75 5l-2 2"/><path d="M8 52l8-28h36l8 28zM12 38h44M30 24l-4 28M40 24l4 28"/></svg>
+          <h3>Solar</h3>
+          <p>No power on site needed.</p>
+        </label>
+        <label class="card">
+          <input type="radio" name="power" value="pole" data-label="Power pole">
+          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M42 4v50M26 12h32M30 20h24M2 16c10 6 16 4 24-4M82 16c-10 6-16 4-24-4"/><rect x="46" y="30" width="16" height="14" rx="2.5"/></svg>
+          <h3>Power pole</h3>
+          <p>Runs off your temporary power.</p>
+        </label>
+      </div>
+    </fieldset>
+  </div>
+</section>
+
+<section class="pick">
+  <div class="wrap">
+    <fieldset>
+      <legend><span class="num">03</span><h2>Add-ons</h2><small>Optional</small></legend>
+      <div class="cards">
+        <label class="card box">
+          <input type="checkbox" name="battery" value="1" data-label="Battery backup" id="battery">
+          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="12" width="60" height="32" rx="6"/><path d="M68 22h6v12h-6M40 18l-8 11h10l-4 9"/></svg>
+          <h3>Battery backup</h3>
+          <p id="battery-note">Keeps running when the power is cut. For the power pole option.</p>
+        </label>
+        <label class="card box">
+          <input type="checkbox" name="ai" value="1" data-label="AI video detection">
+          <svg viewBox="0 0 84 56" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V8h10M78 16V8H68M6 40v8h10M78 40v8H68"/><circle cx="42" cy="21" r="6"/><path d="M30 44c1-8 6-11 12-11s11 3 12 11"/></svg>
+          <h3>AI video detection</h3>
+          <p>Smart detection on your video.</p>
+          <span class="fee">Monthly fee</span>
+        </label>
+      </div>
+    </fieldset>
+  </div>
+</section>
+
+</form>
+
+<section class="next">
+  <div class="wrap">
+    <h2>What happens next.</h2>
+    <ol class="flow">
+      <li><h3>Send your picks</h3><p>Tell us about the site.</p></li>
+      <li><h3>We quote it</h3><p>Pricing and availability for your setup.</p></li>
+      <li><h3>We build it</h3><p>Configured and tested before it leaves.</p></li>
+      <li><h3>You mount it</h3><p>Installation is available when it's quoted on your invoice.</p></li>
+    </ol>
+    <p class="sub price">We go over pricing with you when we quote.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="mark" href="./">Sentry<b>Box</b></a>
+    <span>© <span id="yr">2026</span> SentryBox</span>
+  </div>
+</footer>
+
+<div class="bar" role="region" aria-label="Your selection">
+  <div class="wrap">
+    <div class="bar-text"><small>Your box</small><b id="summary" aria-live="polite"></b></div>
+    <a class="btn" id="go" href="./#quote" data-quote>Get a quote</a>
+  </div>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('pick'), battery = document.getElementById('battery');
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  function update() {
+    var solar = form.power.value === 'solar';
+    // battery backup is an add-on for the power pole option only
+    battery.disabled = solar;
+    if (solar) battery.checked = false;
+    document.getElementById('battery-note').textContent = solar
+      ? 'Available with the power pole option.'
+      : 'Keeps running when the power is cut.';
+    var picked = [].filter.call(form.elements, function (el) { return el.checked; });
+    document.getElementById('summary').textContent = picked.map(function (el) { return el.dataset.label; }).join(' · ');
+    var q = new URLSearchParams();
+    picked.forEach(function (el) { q.set(el.name, el.value); });
+    [].forEach.call(document.querySelectorAll('[data-quote]'), function (a) { a.href = './?' + q.toString() + '#quote'; });
+  }
+  form.addEventListener('change', update);
+  update();
+})();
+</script>
+</body>
+</html>

@@ -156,6 +156,7 @@ h1 em, h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; 
 .chip input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
 .chip:active span { transform: scale(.96); }
 .more { grid-column: 1 / -1; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 [hidden] { display: none !important; }
 .more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 32px; color: var(--soft); font-size: .95rem; text-decoration: underline; text-underline-offset: 3px; }
 .more summary::-webkit-details-marker { display: none; }
@@ -471,6 +472,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
         <label class="chip"><input type="radio" name="sites" value="10 or more"><span>10 or more</span></label>
       </fieldset>
       <input type="hidden" name="picks" id="picks-field">
+      <div class="hp" aria-hidden="true"><label>Company<input name="company" tabindex="-1" autocomplete="off"></label></div>
       <details class="more">
         <summary>Add a note</summary>
         <textarea id="q-msg" name="msg" aria-label="Note" placeholder="Where your sites are, timeline, anything else"></textarea>
@@ -497,8 +499,8 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   var $ = function (id) { return document.getElementById(id); };
   $('yr').textContent = new Date().getFullYear();
 
-  // Quote form. Set QUOTE_ENDPOINT to your form service URL (Formspree, Basin, your own API) to receive requests.
-  var QUOTE_ENDPOINT = '';
+  // Quote form: requests go to the SentryBox service and show up in the admin under Website requests.
+  var QUOTE_ENDPOINT = 'https://api.sentrysecurityla.com/lead';
   $('quote-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var f = e.target, note = $('form-note'), btn = f.querySelector('button');
@@ -506,7 +508,8 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     if (!f.contact.value.trim()) { note.textContent = 'Add a phone number or email so we can reach you.'; f.contact.focus(); return; }
     if (!QUOTE_ENDPOINT) { note.textContent = 'Quote requests are not connected yet. Nothing was sent.'; return; }
     btn.disabled = true; note.textContent = 'Sending...';
-    fetch(QUOTE_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(f) })
+    var d = new FormData(f);
+    fetch(QUOTE_ENDPOINT, { method: 'POST', body: JSON.stringify({ name: d.get('name'), contact: d.get('contact'), jobs: d.getAll('jobs'), sites: d.get('sites') || '', picks: d.get('picks') || '', msg: d.get('msg') || '', company: d.get('company') || '' }) })
       .then(function (r) { if (!r.ok) throw 0; f.reset(); note.textContent = 'Request sent. We will be in touch with a quote.'; })
       .catch(function () { note.textContent = 'That did not send. Check your connection and try again.'; })
       .then(function () { btn.disabled = false; });

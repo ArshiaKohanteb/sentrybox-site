@@ -146,6 +146,8 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 .chip input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
 .chip:active span { transform: scale(.96); }
 .more { grid-column: 1 / -1; }
+.picks { grid-column: 1 / -1; padding: 12px 16px; border-radius: 14px; background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .18); font-size: .95rem; }
+[hidden] { display: none !important; }
 .more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 32px; color: var(--soft); font-size: .95rem; text-decoration: underline; text-underline-offset: 3px; }
 .more summary::-webkit-details-marker { display: none; }
 .more textarea { width: 100%; margin-top: 10px; min-height: 84px; padding: 13px 14px; font: 400 1rem/1.4 var(--body); color: var(--ink); background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .2); border-radius: 14px; resize: vertical; }
@@ -426,7 +428,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   <div class="wrap">
     <div class="close-copy">
       <h2 class="rv">Don't wait for the <em>first break-in.</em></h2>
-      <p class="sub rv" style="--d:1">Leave a name and a way to reach you. We'll come back with a quote.</p>
+      <p class="sub rv" style="--d:1">Tell us about your jobs and how to reach you. We'll come back with a quote.</p>
       <ul class="ticks rv" style="--d:2">
         <li>Built, configured and tested before it ships</li>
         <li>Internet and data plan included</li>
@@ -437,18 +439,25 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
       <div class="f"><label for="q-name">Name</label><input id="q-name" name="name" autocomplete="name" required></div>
       <div class="f"><label for="q-contact">Phone or email</label><input id="q-contact" name="contact" autocomplete="email" required></div>
       <fieldset class="chips">
-        <legend>Tap what you want (optional)</legend>
-        <label class="chip"><input type="checkbox" name="want" value="8 HD cameras" data-k="cams=hd"><span>8 HD cameras</span></label>
-        <label class="chip"><input type="checkbox" name="want" value="2 to 3 4K cameras" data-k="cams=4k"><span>4K cameras</span></label>
-        <label class="chip"><input type="checkbox" name="want" value="Solar" data-k="power=solar"><span>Solar</span></label>
-        <label class="chip"><input type="checkbox" name="want" value="Power pole" data-k="power=pole"><span>Power pole</span></label>
-        <label class="chip"><input type="checkbox" name="want" value="Battery backup" data-k="battery=1"><span>Battery backup</span></label>
-        <label class="chip"><input type="checkbox" name="want" value="AI video detection" data-k="ai=1"><span>AI detection</span></label>
-        <label class="chip"><input type="checkbox" name="want" value="Installation" data-k="install=1"><span>Installation</span></label>
+        <legend>What kind of jobs do you run?</legend>
+        <label class="chip"><input type="checkbox" name="jobs" value="New homes"><span>New homes</span></label>
+        <label class="chip"><input type="checkbox" name="jobs" value="Remodels"><span>Remodels</span></label>
+        <label class="chip"><input type="checkbox" name="jobs" value="Multi-family"><span>Multi-family</span></label>
+        <label class="chip"><input type="checkbox" name="jobs" value="Commercial"><span>Commercial</span></label>
+        <label class="chip"><input type="checkbox" name="jobs" value="Something else"><span>Something else</span></label>
       </fieldset>
+      <fieldset class="chips">
+        <legend>How many jobsites at a time?</legend>
+        <label class="chip"><input type="radio" name="sites" value="1"><span>1</span></label>
+        <label class="chip"><input type="radio" name="sites" value="2 to 3"><span>2 to 3</span></label>
+        <label class="chip"><input type="radio" name="sites" value="4 to 9"><span>4 to 9</span></label>
+        <label class="chip"><input type="radio" name="sites" value="10 or more"><span>10 or more</span></label>
+      </fieldset>
+      <p class="picks" id="picks" hidden></p>
+      <input type="hidden" name="picks" id="picks-field">
       <details class="more">
         <summary>Add a note</summary>
-        <textarea id="q-msg" name="msg" aria-label="Note" placeholder="Where the site is, how many boxes, timeline"></textarea>
+        <textarea id="q-msg" name="msg" aria-label="Note" placeholder="Where your sites are, timeline, anything else"></textarea>
       </details>
       <button class="btn" type="submit">Get a quote</button>
       <p class="note" id="form-note" role="status"></p>
@@ -487,12 +496,11 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
       .then(function () { btn.disabled = false; });
   });
 
-  // choices carried over from the options page
+  // picks carried over from the options page: shown as one line and sent along, not asked again
   var q = new URLSearchParams(location.search);
-  [].forEach.call(document.querySelectorAll('.chip input'), function (c) {
-    var kv = c.dataset.k.split('=');
-    c.checked = q.get(kv[0]) === kv[1];
-  });
+  var PICK = { cams: { hd: '8 HD cameras', '4k': '4K cameras' }, power: { solar: 'Solar', pole: 'Power pole' }, battery: { 1: 'Battery backup' }, ai: { 1: 'AI detection' }, install: { 1: 'Installation' } };
+  var picked = Object.keys(PICK).map(function (k) { return PICK[k][q.get(k)]; }).filter(Boolean);
+  if (picked.length) { $('picks-field').value = picked.join(', '); $('picks').textContent = 'Your picks: ' + picked.join(', '); $('picks').hidden = false; }
 
   var nav = $('nav');
   // the nav stays clear over the pictures and turns solid once the reel has passed

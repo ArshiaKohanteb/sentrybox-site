@@ -1,492 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SentryBox | Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SentryBox | Admin has moved</title>
 <meta name="robots" content="noindex, nofollow, noarchive">
-<meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#08090b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Schibsted+Grotesk:wght@400;600;800&display=swap">
 <style>
-/* The back office. Nothing here is sent anywhere: quotes, prices and settings are kept in this browser,
-   and a quote only leaves as a signed link. The signing key is pasted once per device. */
-:root {
-  --bg: #08090b; --panel: #101216; --field: #171a20; --line: rgb(255 255 255 / .12); --ink: #f4f3ef; --soft: #a7abb3;
-  --red: #ff3b47; --red-btn: #e1202c; --red-btn-hover: #f2303c; --green: #35c27a; --amber: #f0b03f; --blue: #6f9bff;
-  --display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --body: "Figtree", "Helvetica Neue", Arial, sans-serif;
-  --side: clamp(16px, 3vw, 32px); --nav: 60px;
-  color-scheme: dark;
-}
-*, *::before, *::after { box-sizing: border-box; }
-html { background: var(--bg); }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.5 var(--body); -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
 [hidden] { display: none !important; }
-p { margin: 0; }
-:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin: 0; }
-h1 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.04em; }
-h2 { font-size: 1.35rem; }
-h3 { font-size: 1rem; letter-spacing: -0.01em; }
-.soft { color: var(--soft); }
-.small { font-size: .88rem; }
-
-.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--red-btn); color: #fff; font: 600 .95rem/1 var(--body); text-decoration: none; cursor: pointer; white-space: nowrap; transition: background-color 150ms ease; }
-.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-.btn.white { background: #fff; color: #08090b; }
-.btn.danger { background: transparent; color: var(--red); border: 1px solid rgb(255 59 71 / .5); }
-.btn.sm { min-height: 36px; padding: 0 14px; font-size: .88rem; }
-.btn:disabled { opacity: .45; cursor: not-allowed; }
-@media (hover: hover) and (pointer: fine) { .btn:hover:not(:disabled) { background: var(--red-btn-hover); } .btn.ghost:hover:not(:disabled), .btn.danger:hover:not(:disabled) { background: rgb(255 255 255 / .07); } .btn.white:hover:not(:disabled) { background: #e6e5e1; } }
-
-label { display: flex; flex-direction: column; gap: 6px; font: 500 .85rem/1.2 var(--body); color: var(--soft); min-width: 0; }
-input, select, textarea { width: 100%; min-height: 44px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--field); color: var(--ink); font: 400 1rem/1.3 var(--body); }
-textarea { min-height: 88px; resize: vertical; }
-input:focus, select:focus, textarea:focus { outline: 2px solid var(--blue); outline-offset: 0; border-color: transparent; }
-input[type=checkbox] { width: 20px; min-height: 20px; height: 20px; padding: 0; accent-color: var(--red-btn); }
-.check { flex-direction: row; align-items: center; gap: 10px; color: var(--ink); font-size: 1rem; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--field); cursor: pointer; }
-
-.nav { position: sticky; top: 0; z-index: 20; background: rgb(8 9 11 / .9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
-.nav > div { height: var(--nav); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-left: max(var(--side), env(safe-area-inset-left, 0px)); padding-right: max(var(--side), env(safe-area-inset-right, 0px)); }
-.mark { font: 700 1.25rem/1 var(--display); letter-spacing: -0.04em; text-decoration: none; color: var(--ink); }
-.mark b { color: var(--red); } .mark span { color: var(--soft); font-weight: 500; font-size: .95rem; letter-spacing: 0; margin-left: 8px; }
-.nav .tools { display: flex; gap: 8px; }
-
-/* unlock */
-.gate { min-height: 100svh; display: grid; place-items: center; padding: 24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px)); }
-.gate form { width: min(100%, 460px); display: flex; flex-direction: column; gap: 18px; }
-.err { color: var(--red); min-height: 1.4em; font-size: .92rem; }
-
-.app { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); min-height: calc(100svh - var(--nav)); }
-.listcol { border-right: 1px solid var(--line); padding: 20px max(16px, env(safe-area-inset-right, 0px)) 40px max(var(--side), env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; gap: 16px; padding-right: 16px; }
-.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.tile { padding: 12px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.tile small { color: var(--soft); font-size: .78rem; }
-.tile b { font: 700 1.2rem/1.2 var(--display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-.tabs button { min-height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--soft); font: 500 .85rem/1 var(--body); cursor: pointer; }
-.tabs button[aria-pressed=true] { background: var(--ink); color: #08090b; border-color: var(--ink); }
-.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-.list button { width: 100%; text-align: left; padding: 12px 14px; border-radius: 14px; border: 1px solid transparent; background: transparent; color: var(--ink); font: inherit; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; }
-.list button[aria-current=true] { background: var(--panel); border-color: var(--line); }
-@media (hover: hover) and (pointer: fine) { .list button:hover { background: var(--panel); } }
-.list b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.list .amt { font-variant-numeric: tabular-nums; }
-.list small { color: var(--soft); font-size: .82rem; }
-.pill { justify-self: end; font: 600 .74rem/1 var(--body); padding: 4px 8px; border-radius: 999px; border: 1px solid currentColor; }
-.pill.draft { color: var(--soft); } .pill.sent { color: var(--blue); } .pill.accepted { color: var(--amber); } .pill.paid { color: var(--green); }
-
-.edit { padding: 24px max(var(--side), env(safe-area-inset-right, 0px)) 120px max(var(--side), env(safe-area-inset-left, 0px)); padding-left: var(--side); min-width: 0; }
-.edit form { max-width: 880px; display: flex; flex-direction: column; gap: 28px; }
-.head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.span2 { grid-column: span 2; } .span3 { grid-column: 1 / -1; }
-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
-legend { padding: 0; margin-bottom: 4px; font: 700 1.1rem/1.2 var(--display); letter-spacing: -0.02em; color: var(--ink); }
-.rows { display: flex; flex-direction: column; gap: 8px; }
-.rowi { display: grid; grid-template-columns: minmax(0, 1fr) 76px 120px 44px; gap: 8px; align-items: center; }
-.rowi.mo { grid-template-columns: minmax(0, 1fr) 120px 44px; }
-.x { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: transparent; color: var(--soft); font-size: 1.2rem; cursor: pointer; }
-.rowbtns { display: flex; gap: 8px; flex-wrap: wrap; }
-.totals { align-self: flex-end; width: min(100%, 320px); display: flex; flex-direction: column; gap: 6px; font-variant-numeric: tabular-nums; }
-.totals div { display: flex; justify-content: space-between; color: var(--soft); }
-.totals .t { color: var(--ink); padding-top: 8px; border-top: 1px solid var(--line); font: 700 1.5rem/1.2 var(--display); letter-spacing: -0.03em; }
-
-.dock { position: fixed; inset: auto 0 0 0; z-index: 15; background: rgb(16 18 22 / .94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 10px max(var(--side), env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(var(--side), env(safe-area-inset-left, 0px)); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.dock .msg { margin-right: auto; color: var(--soft); font-size: .9rem; }
-.empty { display: grid; place-items: center; text-align: center; gap: 14px; padding: 80px 20px; color: var(--soft); }
-
-dialog { width: min(100% - 24px, 640px); max-height: min(100svh - 24px, 860px); border: 1px solid var(--line); border-radius: 22px; background: var(--panel); color: var(--ink); padding: 0; }
-dialog::backdrop { background: rgb(0 0 0 / .66); }
-dialog form { padding: 24px; display: flex; flex-direction: column; gap: 22px; }
-dialog .head { align-items: center; }
-.out { font: 400 .82rem/1.4 ui-monospace, Menlo, monospace; word-break: break-all; padding: 12px; border-radius: 12px; background: var(--field); border: 1px solid var(--line); max-height: 120px; overflow: auto; }
-
-@media (max-width: 860px) {
-  .app { grid-template-columns: minmax(0, 1fr); }
-  .listcol { border-right: 0; border-bottom: 1px solid var(--line); padding-right: max(var(--side), env(safe-area-inset-right, 0px)); padding-bottom: 20px; }
-  .list { max-height: 260px; overflow: auto; }
-  .grid, .grid.two { grid-template-columns: minmax(0, 1fr); }
-  .span2 { grid-column: auto; }
-  .rowi { grid-template-columns: minmax(0, 1fr) 60px 96px 44px; }
-  .dock .msg { flex-basis: 100%; }
-}
+html { color-scheme: dark; }
+body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 32px max(20px, env(safe-area-inset-right, 0px)) 32px max(20px, env(safe-area-inset-left, 0px)); background: radial-gradient(900px 600px at 70% 0%, rgba(214, 40, 40, .16), transparent 60%), #0b0c0e; color: #f2f1ee; font: 16px/1.55 "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { width: 100%; max-width: 520px; }
+h1 { margin: 0 0 14px; font-size: clamp(34px, 8vw, 52px); line-height: .98; font-weight: 800; text-transform: uppercase; letter-spacing: -.02em; text-wrap: balance; }
+h1 em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; text-transform: none; color: #e5383b; letter-spacing: 0; }
+p { margin: 0 0 22px; color: #b9b7b1; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid transparent; background: #e5383b; color: #fff; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+.btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.old { margin-top: 34px; padding: 20px; border-radius: 18px; border: 1px solid rgba(255, 255, 255, .14); background: rgba(255, 255, 255, .05); }
+.old p { margin-bottom: 14px; color: #dcdad5; }
+.old .btn { background: transparent; border-color: rgba(255, 255, 255, .3); color: #f2f1ee; }
+.small { margin: 12px 0 0; font-size: 14px; color: #98968f; }
 </style>
 </head>
 <body>
+<main>
+  <h1>The admin <em>has moved.</em></h1>
+  <p>Quotes, invoices and website requests now live at a new address, behind your email sign-in.</p>
+  <a class="btn" href="https://admin.sentrysecurityla.com/">Open the admin</a>
 
-<!-- unlock -->
-<main class="gate" id="gate" hidden>
-  <form id="unlock" autocomplete="off">
-    <a class="mark" href="./">Sentry<b>Box</b><span>Admin</span></a>
-    <h1>Unlock this device.</h1>
-    <p class="soft">Paste your admin key. It stays in this browser and is what makes your quote links genuine. You only do this once per device.</p>
-    <label>Admin key<textarea id="keyin" rows="4" spellcheck="false" autocapitalize="off" placeholder="sbk1.…"></textarea></label>
-    <p class="err" id="keyerr" role="alert"></p>
-    <button class="btn" type="submit">Unlock</button>
-  </form>
+  <div class="old" id="old" hidden>
+    <p id="oldmsg"></p>
+    <button class="btn" id="exp" type="button">Save backup file</button>
+    <p class="small" id="bakmsg">Then open the admin, go to Settings and choose "Load backup file".</p>
+  </div>
 </main>
-
-<div id="shell" hidden>
-  <header class="nav"><div>
-    <a class="mark" href="./">Sentry<b>Box</b><span>Admin</span></a>
-    <div class="tools">
-      <button class="btn ghost sm" id="openSettings" type="button">Settings</button>
-      <button class="btn ghost sm" id="lock" type="button">Lock</button>
-    </div>
-  </div></header>
-
-  <div class="app">
-    <aside class="listcol">
-      <div class="tiles">
-        <div class="tile"><small>Open quotes</small><b id="tOpen">$0</b></div>
-        <div class="tile"><small>Paid</small><b id="tPaid">$0</b></div>
-      </div>
-      <button class="btn" id="new" type="button">New quote</button>
-      <div class="tabs" id="tabs" role="group" aria-label="Filter">
-        <button type="button" data-f="all" aria-pressed="true">All</button>
-        <button type="button" data-f="draft" aria-pressed="false">Draft</button>
-        <button type="button" data-f="sent" aria-pressed="false">Sent</button>
-        <button type="button" data-f="accepted" aria-pressed="false">Accepted</button>
-        <button type="button" data-f="paid" aria-pressed="false">Paid</button>
-      </div>
-      <ul class="list" id="list"></ul>
-    </aside>
-
-    <section class="edit">
-      <div class="empty" id="empty">
-        <h2>No quote open</h2>
-        <p>Start a new quote, or pick one from the list.</p>
-      </div>
-
-      <form id="f" hidden autocomplete="off">
-        <div class="head">
-          <div><p class="soft small" id="docKind">Quote</p><h1 id="docTitle">New quote</h1></div>
-          <label style="width: 210px">Status
-            <select id="status">
-              <option value="draft">Draft</option>
-              <option value="sent">Sent</option>
-              <option value="accepted">Accepted</option>
-              <option value="paid">Paid (becomes invoice)</option>
-            </select>
-          </label>
-        </div>
-
-        <fieldset><legend>Customer</legend>
-          <div class="grid">
-            <label>Name or company<input id="c" maxlength="80"></label>
-            <label>Jobsite or project<input id="s" maxlength="80"></label>
-            <label>Their email (stays on this device)<input id="email" type="email" maxlength="120"></label>
-          </div>
-        </fieldset>
-
-        <fieldset><legend>Details</legend>
-          <div class="grid">
-            <label>Number<input id="n" maxlength="20"></label>
-            <label>Date<input id="d" type="date"></label>
-            <label id="xWrap">Good until<input id="x" type="date"></label>
-            <label id="pdWrap" hidden>Paid on<input id="pd" type="date"></label>
-          </div>
-        </fieldset>
-
-        <fieldset><legend>Setup</legend>
-          <div class="grid two">
-            <label>Cameras<select id="cam"><option value="">Not shown</option><option value="hd">8 HD bullet cameras</option><option value="4k">4K cameras</option></select></label>
-            <label>Power<select id="pw"><option value="">Not shown</option><option value="solar">Solar</option><option value="pole">Power pole</option></select></label>
-          </div>
-          <div class="grid">
-            <label class="check"><input type="checkbox" id="ad_battery">Battery backup</label>
-            <label class="check"><input type="checkbox" id="ad_ai">AI video detection</label>
-            <label class="check"><input type="checkbox" id="ad_install">Installation</label>
-          </div>
-          <div class="rowbtns"><button class="btn ghost sm" id="fill" type="button">Fill the price lines from this setup</button></div>
-        </fieldset>
-
-        <fieldset><legend>One-time charges</legend>
-          <div class="rows" id="items"></div>
-          <div class="rowbtns"><button class="btn ghost sm" id="addItem" type="button">Add a line</button></div>
-        </fieldset>
-
-        <fieldset><legend>Monthly charges</legend>
-          <div class="rows" id="monthly"></div>
-          <div class="rowbtns"><button class="btn ghost sm" id="addMo" type="button">Add a monthly line</button></div>
-        </fieldset>
-
-        <div class="grid two">
-          <label>Tax %<input id="tx" type="number" min="0" max="30" step="0.01" inputmode="decimal"></label>
-          <div class="totals" id="totals"></div>
-        </div>
-
-        <fieldset><legend>Payment and notes</legend>
-          <label>Payment link (a Stripe payment link, or any https checkout link)<input id="pay" type="url" inputmode="url" placeholder="https://buy.stripe.com/…" maxlength="300"></label>
-          <p class="err" id="payerr" role="alert"></p>
-          <label>Note to the customer<textarea id="nt" maxlength="600"></textarea></label>
-        </fieldset>
-
-        <div class="rowbtns">
-          <button class="btn ghost sm" id="dup" type="button">Duplicate</button>
-          <button class="btn danger sm" id="del" type="button">Delete</button>
-        </div>
-      </form>
-    </section>
-  </div>
-
-  <div class="dock" id="dock" hidden>
-    <span class="msg" id="msg" role="status">Saved on this device</span>
-    <button class="btn ghost" id="preview" type="button">Open</button>
-    <button class="btn ghost" id="copyEmail" type="button">Copy email</button>
-    <button class="btn" id="copyLink" type="button">Copy link</button>
-  </div>
-</div>
-
-<dialog id="settings">
-  <form method="dialog" id="sf">
-    <div class="head"><h2>Settings</h2><button class="btn ghost sm" value="close">Done</button></div>
-    <p class="soft small">Kept in this browser only. Prices here are your starting points; you can change any line on a quote.</p>
-    <fieldset><legend>Starting prices</legend>
-      <div class="grid">
-        <label>8 HD camera box<input data-p="hd" type="number" min="0" step="0.01" inputmode="decimal"></label>
-        <label>4K camera box<input data-p="4k" type="number" min="0" step="0.01" inputmode="decimal"></label>
-        <label>Solar power kit<input data-p="solar" type="number" min="0" step="0.01" inputmode="decimal"></label>
-        <label>Power pole hookup<input data-p="pole" type="number" min="0" step="0.01" inputmode="decimal"></label>
-        <label>Battery backup<input data-p="battery" type="number" min="0" step="0.01" inputmode="decimal"></label>
-        <label>Installation<input data-p="install" type="number" min="0" step="0.01" inputmode="decimal"></label>
-        <label>AI detection, per month<input data-p="ai" type="number" min="0" step="0.01" inputmode="decimal"></label>
-        <label>Tax %<input id="s_tx" type="number" min="0" max="30" step="0.01" inputmode="decimal"></label>
-        <label>Quote good for (days)<input id="s_days" type="number" min="1" max="365" step="1" inputmode="numeric"></label>
-      </div>
-    </fieldset>
-    <fieldset><legend>Shown on every quote</legend>
-      <label>How customers reach you (appears only inside quote links, never on the public site)<input id="s_ct" maxlength="140" placeholder="Reply to this email or call …"></label>
-      <label>Other ways to pay (optional)<textarea id="s_pm" maxlength="300" placeholder="Check or bank transfer accepted. Ask for details."></textarea></label>
-    </fieldset>
-    <fieldset><legend>Backup</legend>
-      <p class="soft small">Quotes live in this browser. Save a backup file now and then, and load it on another device to carry them over.</p>
-      <div class="rowbtns">
-        <button class="btn ghost sm" id="exp" type="button">Save backup file</button>
-        <label class="btn ghost sm" style="flex-direction: row; color: var(--ink)">Load backup file<input id="imp" type="file" accept="application/json,.json" hidden></label>
-      </div>
-      <p class="small soft" id="bakmsg" role="status"></p>
-    </fieldset>
-  </form>
-</dialog>
-
 <script>
 (function () {
   'use strict';
-  var PUB = 'BO5DtHFEFQrF3n8aCg0fiCnStXNLB31Wts7BZ8hlrckscuga3bIRUfqFx-1jXm9z8Cp7arVgF1bgLcGbiFIb764';
+  /* The old page kept a copy of the signing key in this browser. It is no longer used here. */
+  try { localStorage.removeItem('sb.key'); } catch (e) {}
+
+  var read = function (k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } };
+  var quotes = read('sb.quotes', []), settings = read('sb.settings', {});
+  if (!Array.isArray(quotes) || !quotes.length) return;
+
   var $ = function (id) { return document.getElementById(id); };
-  var el = function (tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; };
-  var money = function (n) { return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n || 0); };
-  var store = {
-    get: function (k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }
-  };
-  var b64 = function (bytes) { var s = ''; for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
-  var unb64 = function (s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; var bin = atob(s), o = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) o[i] = bin.charCodeAt(i); return o; };
-  var today = function (plus) { var d = new Date(); d.setDate(d.getDate() + (plus || 0)); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
-  var nice = function (s) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? new Date(+m[1], m[2] - 1, +m[3]).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''; };
-
-  /* ---------- key ---------- */
-  var signKey = null;
-  var ALG = { name: 'ECDSA', namedCurve: 'P-256' }, SIG = { name: 'ECDSA', hash: 'SHA-256' };
-  function loadKey(text) {
-    var m = /sbk1\.([A-Za-z0-9_-]+)/.exec(text || '');
-    if (!m || !window.crypto || !crypto.subtle) return Promise.reject(new Error('format'));
-    var priv, probe = new Uint8Array([1, 2, 3]);
-    return crypto.subtle.importKey('pkcs8', unb64(m[1]), ALG, false, ['sign'])
-      .then(function (k) { priv = k; return crypto.subtle.sign(SIG, k, probe); })
-      .then(function (sig) { return crypto.subtle.importKey('raw', unb64(PUB), ALG, false, ['verify']).then(function (pub) { return crypto.subtle.verify(SIG, pub, sig, probe); }); })
-      .then(function (ok) { if (!ok) throw new Error('mismatch'); signKey = priv; return 'sbk1.' + m[1]; });
-  }
-  function start() { $('gate').hidden = true; $('shell').hidden = false; renderList(); }
-  var savedKey = null; try { savedKey = localStorage.getItem('sb.key'); } catch (e) {}
-  if (savedKey) loadKey(savedKey).then(start, function () { $('gate').hidden = false; }); else $('gate').hidden = false;
-  $('unlock').addEventListener('submit', function (e) {
-    e.preventDefault(); $('keyerr').textContent = '';
-    loadKey($('keyin').value).then(function (k) { try { localStorage.setItem('sb.key', k); } catch (err) {} $('keyin').value = ''; start(); },
-      function () { $('keyerr').textContent = 'That key did not work. Paste the whole line that starts with sbk1.'; });
-  });
-  var lockArmed = false;
-  $('lock').addEventListener('click', function () {
-    if (!lockArmed) { lockArmed = true; this.textContent = 'Remove key from this device?'; var b = this; setTimeout(function () { lockArmed = false; b.textContent = 'Lock'; }, 4000); return; }
-    try { localStorage.removeItem('sb.key'); } catch (e) {} location.reload();
-  });
-
-  /* ---------- data ---------- */
-  var DEF = { prices: { hd: 0, '4k': 0, solar: 0, pole: 0, battery: 0, install: 0, ai: 0 }, tx: 0, days: 14, ct: '', pm: '', seq: 1001 };
-  var settings = Object.assign({}, DEF, store.get('sb.settings', {})); settings.prices = Object.assign({}, DEF.prices, settings.prices || {});
-  var quotes = store.get('sb.quotes', []);
-  var cur = null, filter = 'all';
-  var save = function () { var ok = store.set('sb.quotes', quotes) && store.set('sb.settings', settings); say(ok ? 'Saved on this device' : 'Could not save on this device'); };
-  var say = function (t) { $('msg').textContent = t; };
-  var totalOf = function (q) { var s = 0; (q.it || []).forEach(function (r) { s += (+r[1] || 1) * (+r[2] || 0); }); return s + (q.tx ? Math.round(s * q.tx) / 100 : 0); };
-  var LABEL = { draft: 'Draft', sent: 'Sent', accepted: 'Accepted', paid: 'Paid' };
-  var NAMES = { hd: 'SentryBox with 8 HD bullet cameras', '4k': 'SentryBox with 4K cameras', solar: 'Solar power kit', pole: 'Power pole hookup', battery: 'Battery backup', install: 'Installation', ai: 'AI video detection' };
-
-  function renderList() {
-    var open = 0, paid = 0, ul = $('list'); ul.textContent = '';
-    quotes.forEach(function (q) { if (q.status === 'paid') paid += totalOf(q); else open += totalOf(q); });
-    $('tOpen').textContent = money(open); $('tPaid').textContent = money(paid);
-    var shown = quotes.filter(function (q) { return filter === 'all' || q.status === filter; }).sort(function (a, b) { return (b.updated || 0) - (a.updated || 0); });
-    shown.forEach(function (q) {
-      var li = el('li'), b = el('button'); b.type = 'button'; b.setAttribute('aria-current', String(cur && cur.id === q.id));
-      b.append(el('b', q.c || 'No name yet'), el('span', LABEL[q.status], 'pill ' + q.status), el('small', q.status === 'paid' ? 'Invoice ' + q.n.replace(/^Q-/, 'INV-') : 'Quote ' + q.n), el('small', money(totalOf(q)), 'amt'));
-      b.addEventListener('click', function () { openQuote(q.id); }); li.append(b); ul.append(li);
-    });
-    if (!shown.length) ul.append(el('li', quotes.length ? 'Nothing with this status.' : 'No quotes yet.', 'soft small'));
-  }
-  [].forEach.call($('tabs').children, function (b) { b.addEventListener('click', function () { filter = b.dataset.f; [].forEach.call($('tabs').children, function (o) { o.setAttribute('aria-pressed', String(o === b)); }); renderList(); }); });
-
-  function newQuote(from) {
-    var q = from ? JSON.parse(JSON.stringify(from)) : { c: '', s: '', email: '', cam: '', pw: '', ad: [], it: [], mo: [], nt: '', pay: '', tx: settings.tx || 0 };
-    q.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-    q.n = 'Q-' + settings.seq++; q.status = 'draft'; q.d = today(); q.x = today(+settings.days || 14); q.pd = ''; q.updated = Date.now();
-    quotes.push(q); save(); openQuote(q.id);
-  }
-  $('new').addEventListener('click', function () { newQuote(); });
-  $('dup').addEventListener('click', function () { if (cur) newQuote(cur); });
-
-  function openQuote(id) {
-    cur = quotes.filter(function (q) { return q.id === id; })[0] || null;
-    $('f').hidden = !cur; $('dock').hidden = !cur; $('empty').hidden = !!cur;
-    if (!cur) { renderList(); return; }
-    ['c', 's', 'email', 'n', 'd', 'x', 'pd', 'cam', 'pw', 'nt', 'pay', 'status'].forEach(function (k) { $(k).value = cur[k] || (k === 'status' ? 'draft' : ''); });
-    $('tx').value = cur.tx || '';
-    ['battery', 'ai', 'install'].forEach(function (a) { $('ad_' + a).checked = (cur.ad || []).indexOf(a) > -1; });
-    drawRows(); refresh(); renderList(); delArmed = false; $('del').textContent = 'Delete';
-  }
-
-  function drawRows() {
-    var mk = function (host, arr, monthly) {
-      host.textContent = '';
-      arr.forEach(function (r, i) {
-        var row = el('div', null, 'rowi' + (monthly ? ' mo' : ''));
-        var d = el('input'); d.value = r[0] || ''; d.placeholder = 'Description'; d.maxLength = 90; d.setAttribute('aria-label', 'Description');
-        d.addEventListener('input', function () { r[0] = d.value; touch(); });
-        row.append(d);
-        if (!monthly) { var qn = el('input'); qn.type = 'number'; qn.min = 1; qn.step = 1; qn.value = r[1] || 1; qn.setAttribute('aria-label', 'Quantity'); qn.addEventListener('input', function () { r[1] = +qn.value || 1; touch(); }); row.append(qn); }
-        var p = el('input'); p.type = 'number'; p.min = 0; p.step = 0.01; p.inputMode = 'decimal'; p.placeholder = '0.00'; p.setAttribute('aria-label', monthly ? 'Price per month' : 'Price each');
-        var pi = monthly ? 1 : 2; p.value = r[pi] || ''; p.addEventListener('input', function () { r[pi] = +p.value || 0; touch(); });
-        var x = el('button', '×', 'x'); x.type = 'button'; x.setAttribute('aria-label', 'Remove line'); x.addEventListener('click', function () { arr.splice(i, 1); drawRows(); touch(); });
-        row.append(p, x); host.append(row);
-      });
-    };
-    mk($('items'), cur.it, false); mk($('monthly'), cur.mo, true);
-  }
-  $('addItem').addEventListener('click', function () { cur.it.push(['', 1, 0]); drawRows(); touch(); });
-  $('addMo').addEventListener('click', function () { cur.mo.push(['', 0]); drawRows(); touch(); });
-  $('fill').addEventListener('click', function () {
-    var P = settings.prices; cur.it = []; cur.mo = [];
-    if (cur.cam) cur.it.push([NAMES[cur.cam], 1, P[cur.cam]]);
-    if (cur.pw) cur.it.push([NAMES[cur.pw], 1, P[cur.pw]]);
-    if (cur.ad.indexOf('battery') > -1) cur.it.push([NAMES.battery, 1, P.battery]);
-    if (cur.ad.indexOf('install') > -1) cur.it.push([NAMES.install, 1, P.install]);
-    if (cur.ad.indexOf('ai') > -1) cur.mo.push([NAMES.ai, P.ai]);
-    drawRows(); touch();
-  });
-
-  function refresh() {
-    var paid = cur.status === 'paid';
-    $('docKind').textContent = paid ? 'Invoice · Paid' : 'Quote';
-    $('docTitle').textContent = cur.c || 'New quote';
-    $('xWrap').hidden = paid; $('pdWrap').hidden = !paid;
-    var sub = 0; cur.it.forEach(function (r) { sub += (+r[1] || 1) * (+r[2] || 0); });
-    var tax = cur.tx ? Math.round(sub * cur.tx) / 100 : 0, t = $('totals'); t.textContent = '';
-    var row = function (k, v, c) { var d = el('div', null, c); d.append(el('span', k), el('span', v)); t.append(d); };
-    if (tax) { row('Subtotal', money(sub)); row('Tax', money(tax)); }
-    row('Total', money(sub + tax), 't');
-    cur.mo.forEach(function (r) { row(r[0] || 'Monthly', money(r[1]) + ' / mo'); });
-    var badPay = cur.pay && !/^https:\/\/[^\s]+$/i.test(cur.pay);
-    $('payerr').textContent = badPay ? 'The payment link must start with https://. It will be left off until it does.' : '';
-  }
-  function touch() { cur.updated = Date.now(); refresh(); save(); renderList(); }
-  $('f').addEventListener('input', function (e) {
-    var id = e.target.id; if (!cur || !id) return;
-    if (id.indexOf('ad_') === 0) { cur.ad = ['battery', 'ai', 'install'].filter(function (a) { return $('ad_' + a).checked; }); }
-    else if (id === 'tx') cur.tx = Math.min(30, Math.max(0, +e.target.value || 0));
-    else if (id === 'status') { cur.status = e.target.value; if (cur.status === 'paid' && !cur.pd) { cur.pd = today(); $('pd').value = cur.pd; } }
-    else if (['c', 's', 'email', 'n', 'd', 'x', 'pd', 'cam', 'pw', 'nt', 'pay'].indexOf(id) > -1) cur[id] = e.target.value.trim ? e.target.value : e.target.value;
-    else return;
-    touch();
-  });
-  $('f').addEventListener('submit', function (e) { e.preventDefault(); });
-  var delArmed = false;
-  $('del').addEventListener('click', function () {
-    if (!delArmed) { delArmed = true; this.textContent = 'Delete for good?'; return; }
-    quotes = quotes.filter(function (q) { return q !== cur; }); cur = null; save(); openQuote(null);
-  });
-
-  /* ---------- the link ---------- */
-  function makeLink() {
-    var q = cur, paid = q.status === 'paid';
-    var p = { v: 1, k: paid ? 'i' : 'q', n: (paid ? q.n.replace(/^Q-/, 'INV-') : q.n), d: q.d, c: q.c.trim(), it: q.it.filter(function (r) { return r[0]; }) };
-    if (q.s) p.s = q.s.trim(); if (paid) p.pd = q.pd || today(); else if (q.x) p.x = q.x;
-    if (q.cam) p.cam = q.cam; if (q.pw) p.pw = q.pw; if (q.ad.length) p.ad = q.ad;
-    var mo = q.mo.filter(function (r) { return r[0]; }); if (mo.length) p.mo = mo;
-    if (q.tx) p.tx = q.tx; if (q.nt) p.nt = q.nt.trim();
-    if (!paid && /^https:\/\/[^\s]+$/i.test(q.pay || '')) p.pay = q.pay.trim();
-    if (settings.ct) p.ct = settings.ct; if (!paid && settings.pm) p.pm = settings.pm;
-    var data = new TextEncoder().encode(JSON.stringify(p));
-    return crypto.subtle.sign(SIG, signKey, data).then(function (sig) {
-      var all = new Uint8Array(64 + data.length); all.set(new Uint8Array(sig), 0); all.set(data, 64);
-      return new URL('quote.html', location.href).href.split('#')[0] + '#' + b64(all);
-    });
-  }
-  function copy(text, done) {
-    var fallback = function () { var d = $('copybox'); if (!d) { d = el('p', null, 'out'); d.id = 'copybox'; $('f').append(d); } d.textContent = text; var r = document.createRange(); r.selectNodeContents(d); var s = getSelection(); s.removeAllRanges(); s.addRange(r); say('Copy the selected text at the bottom of the page'); };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say(done); }, fallback); else fallback();
-  }
-  var ready = function () { if (!cur.c.trim()) { say('Add the customer name first'); $('c').focus(); return false; } if (!cur.it.some(function (r) { return r[0]; })) { say('Add at least one price line first'); return false; } return true; };
-  var markSent = function () { if (cur.status === 'draft') { cur.status = 'sent'; $('status').value = 'sent'; touch(); } };
-  $('copyLink').addEventListener('click', function () { if (ready()) makeLink().then(function (u) { copy(u, 'Link copied'); markSent(); }); });
-  $('preview').addEventListener('click', function () { if (ready()) { var w = window.open('about:blank', '_blank'); makeLink().then(function (u) { if (w) w.location.href = u; else location.href = u; }); } });
-  $('copyEmail').addEventListener('click', function () {
-    if (!ready()) return;
-    makeLink().then(function (u) {
-      var first = cur.c.trim().split(/\s+/)[0], paid = cur.status === 'paid';
-      var t = paid
-        ? 'Hi ' + first + ',\n\nThank you for your payment. Here is your paid invoice (' + cur.n.replace(/^Q-/, 'INV-') + '):\n' + u + '\n\nYou can download a copy from that page. The link is private to you.\n'
-        : 'Hi ' + first + ',\n\nHere is your SentryBox quote (' + cur.n + ')' + (cur.x ? ', good until ' + nice(cur.x) : '') + ':\n' + u + '\n\nThe link is private to you. Reply to this email with any questions, or when you are ready to go ahead.\n';
-      copy(t, 'Email text copied'); markSent();
-    });
-  });
-
-  /* ---------- settings ---------- */
-  var dlg = $('settings');
-  $('openSettings').addEventListener('click', function () {
-    [].forEach.call(dlg.querySelectorAll('[data-p]'), function (i) { i.value = settings.prices[i.dataset.p] || ''; });
-    $('s_tx').value = settings.tx || ''; $('s_days').value = settings.days; $('s_ct').value = settings.ct; $('s_pm').value = settings.pm; $('bakmsg').textContent = '';
-    dlg.showModal();
-  });
-  $('sf').addEventListener('input', function (e) {
-    var t = e.target;
-    if (t.dataset.p) settings.prices[t.dataset.p] = +t.value || 0;
-    else if (t.id === 's_tx') settings.tx = Math.min(30, Math.max(0, +t.value || 0));
-    else if (t.id === 's_days') settings.days = Math.max(1, +t.value || 14);
-    else if (t.id === 's_ct') settings.ct = t.value.trim();
-    else if (t.id === 's_pm') settings.pm = t.value.trim();
-    else return;
-    save();
-  });
+  $('oldmsg').textContent = 'This browser still holds ' + quotes.length + ' quote' + (quotes.length === 1 ? '' : 's') + ' made on the old page. Save them to a file so you can load them into the new admin.';
+  $('old').hidden = false;
   $('exp').addEventListener('click', function () {
+    var d = new Date(), stamp = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
     var blob = new Blob([JSON.stringify({ sentrybox: 1, settings: settings, quotes: quotes }, null, 1)], { type: 'application/json' });
-    var a = el('a'); a.href = URL.createObjectURL(blob); a.download = 'sentrybox-quotes-' + today() + '.json'; document.body.append(a); a.click(); a.remove();
-    setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000); $('bakmsg').textContent = 'Backup saved to your downloads.';
-  });
-  $('imp').addEventListener('change', function () {
-    var file = this.files[0]; if (!file) return; var input = this;
-    file.text().then(function (txt) {
-      var d = JSON.parse(txt); if (!d || d.sentrybox !== 1 || !Array.isArray(d.quotes)) throw new Error('bad');
-      var have = {}; quotes.forEach(function (q) { have[q.id] = 1; });
-      var added = 0; d.quotes.forEach(function (q) { if (q && q.id && !have[q.id] && Array.isArray(q.it)) { q.ad = q.ad || []; q.mo = q.mo || []; quotes.push(q); added++; } });
-      if (d.settings && typeof d.settings === 'object') { settings.seq = Math.max(settings.seq, +d.settings.seq || 0); }
-      save(); renderList(); $('bakmsg').textContent = added + ' quote' + (added === 1 ? '' : 's') + ' added from the backup.';
-    }).catch(function () { $('bakmsg').textContent = 'That file is not a SentryBox backup.'; }).then(function () { input.value = ''; });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'sentrybox-quotes-' + stamp + '.json';
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    $('bakmsg').textContent = 'Saved to your downloads. Now open the admin, go to Settings and choose "Load backup file".';
   });
 })();
 </script>

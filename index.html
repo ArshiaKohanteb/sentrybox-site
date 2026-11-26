@@ -14,7 +14,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2308090b'/%3E%3Crect x='10' y='27' width='20' height='10' rx='5' fill='%232b6bff'/%3E%3Crect x='34' y='27' width='20' height='10' rx='5' fill='%23e1202c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800&family=Instrument+Serif:ital@1&family=Figtree:wght@400;500;600&display=swap">
 <link rel="preload" as="image" href="assets/scene-dusk.webp" media="(min-width: 701px)">
 <link rel="preload" as="image" href="assets/scene-dusk-sm.webp" media="(max-width: 700px)">
 <script>document.documentElement.classList.add('js');</script>
@@ -198,8 +198,12 @@ section.sec > .wrap { position: relative; z-index: 2; }
 .close .wash { --w: .5; --wx: 18%; --wy: 28%; mix-blend-mode: normal; }
 .close .wrap { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
 .close-copy { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
-.close h2 { max-width: 11ch; }
-.close h2 em { font-style: normal; color: var(--red); }
+/* the closing line keeps the loud voice: heavy capitals, then the threat in red serif italics */
+.close h2 { max-width: 12ch; font-weight: 800; font-size: clamp(2.5rem, 5.4vw, 4.75rem); line-height: .98; letter-spacing: -0.03em; text-transform: uppercase; }
+.close h2 em { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -0.01em; font-size: 1.16em; line-height: .9; color: var(--red); }
+.ticks { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.ticks li { display: flex; align-items: center; gap: 12px; font-weight: 500; }
+.ticks li::before { content: ""; flex: none; width: 22px; height: 22px; border-radius: 50%; background: rgb(225 32 44 / .18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff3b47' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 14px no-repeat; }
 form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: clamp(20px, 3vw, 36px); border-radius: 32px; }
 .f { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .f.full { grid-column: 1 / -1; }
@@ -423,6 +427,11 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     <div class="close-copy">
       <h2 class="rv">Don't wait for the <em>first break-in.</em></h2>
       <p class="sub rv" style="--d:1">Leave a name and a way to reach you. We'll come back with a quote.</p>
+      <ul class="ticks rv" style="--d:2">
+        <li>Built, configured and tested before it ships</li>
+        <li>Internet and data plan included</li>
+        <li>Cameras mounted and ready to go</li>
+      </ul>
     </div>
     <form id="quote-form" class="rv" style="--d:1" novalidate>
       <div class="f"><label for="q-name">Name</label><input id="q-name" name="name" autocomplete="name" required></div>
@@ -452,6 +461,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 <footer>
   <div class="wrap">
     <a class="mark" href="#top">Sentry<b>Box</b></a>
+    <span>Your crew goes home at night. SentryBox doesn't.</span>
     <a href="order.html">Options and how it works</a>
     <span>© <span id="yr">2026</span> SentryBox</span>
   </div>

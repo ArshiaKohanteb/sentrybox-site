@@ -41,7 +41,7 @@
   color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: var(--nav); background: var(--bg); }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav) + 8px); background: var(--bg); }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.55 var(--body); -webkit-font-smoothing: antialiased; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
@@ -58,7 +58,7 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 52px; padding: 0 26px; border: 0; border-radius: 999px; background: var(--red-btn); color: #fff; font: 600 1.0625rem/1 var(--body); text-decoration: none; cursor: pointer; transition: background-color 160ms ease, transform 160ms var(--ease); }
 .btn:active { transform: scale(.97); }
 .btn-s { min-height: 42px; padding: 0 18px; font-size: .95rem; }
-.ghost { display: inline-flex; align-items: center; gap: .5rem; min-height: 52px; padding: 0 6px; font: 500 1.0625rem/1 var(--body); text-decoration: none; }
+.ghost { display: inline-flex; align-items: center; gap: .5rem; min-height: 52px; padding: 0 22px; border-radius: 999px; font: 500 1.0625rem/1 var(--body); text-decoration: none; }
 .ghost::after { content: ""; width: 1em; height: 1em; background: currentColor; -webkit-mask: var(--arrow) center / contain no-repeat; mask: var(--arrow) center / contain no-repeat; transition: transform 200ms var(--ease); --arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M6 13l6 6 6-6'/%3E%3C/svg%3E"); }
 @media (hover: hover) and (pointer: fine) {
   .btn:hover { background: var(--red-btn-hover); transform: translateY(-1px); }
@@ -67,9 +67,9 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 }
 
 /* nav: clear over the pictures, solid once you leave the top */
-.nav { position: fixed; inset: 0 0 auto 0; z-index: 40; height: calc(var(--nav) + env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px); transition: background-color 250ms ease, border-color 250ms ease; border-bottom: 1px solid transparent; }
-.nav.solid { background: rgb(8 9 11 / .82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-color: var(--line); }
-.nav .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.nav { position: fixed; z-index: 40; top: calc(10px + env(safe-area-inset-top, 0px)); left: max(12px, env(safe-area-inset-left, 0px), calc(var(--side) - 22px)); right: max(12px, env(safe-area-inset-right, 0px), calc(var(--side) - 22px)); max-width: 1364px; margin-inline: auto; height: calc(var(--nav) - 10px); border-radius: 999px; transition: background-color 250ms ease; }
+.nav.solid { background: linear-gradient(160deg, rgb(20 22 28 / .72), rgb(20 22 28 / .55)); }
+.nav .wrap { height: 100%; max-width: none; padding: 0 8px 0 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .mark { font: 700 1.35rem/1 var(--display); letter-spacing: -0.04em; text-decoration: none; }
 .mark b { color: var(--red); font-weight: 700; }
 .nav nav { display: flex; align-items: center; gap: 30px; }
@@ -80,8 +80,9 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 .scene { position: sticky; top: 0; height: 100svh; min-height: 520px; overflow: hidden; display: flex; align-items: flex-end; background: var(--bg); box-shadow: 0 -40px 80px rgb(0 0 0 / .65); }
 .scene picture, .scene .shot { position: absolute; inset: 0; width: 100%; height: 100%; }
 .scene .shot { object-fit: cover; object-position: var(--ox, 50%) 50%; transform-origin: var(--ox, 50%) 35%; }
-.scene::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgb(8 9 11 / .92) 0%, rgb(8 9 11 / .55) 26%, rgb(8 9 11 / 0) 52%), linear-gradient(90deg, rgb(8 9 11 / .7) 0%, rgb(8 9 11 / 0) 55%), linear-gradient(180deg, rgb(8 9 11 / .55) 0%, rgb(8 9 11 / 0) 18%); }
-.cap { position: relative; z-index: 2; width: 100%; padding-block: 0 clamp(36px, 7vh, 80px); display: flex; flex-direction: column; align-items: flex-start; gap: clamp(14px, 2vh, 22px); }
+.scene::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgb(8 9 11 / .6) 0%, rgb(8 9 11 / .2) 24%, rgb(8 9 11 / 0) 46%), linear-gradient(90deg, rgb(8 9 11 / .3) 0%, rgb(8 9 11 / 0) 50%), linear-gradient(180deg, rgb(8 9 11 / .5) 0%, rgb(8 9 11 / 0) 18%); }
+.cap { position: relative; z-index: 2; width: 100%; padding-block: 0 clamp(28px, 6vh, 64px); }
+.pane { width: fit-content; max-width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: clamp(14px, 2vh, 22px); padding: clamp(22px, 3vw, 44px); border-radius: clamp(26px, 3vw, 40px); }
 .cap h1, .cap h2 { max-width: 13ch; text-shadow: 0 2px 30px rgb(0 0 0 / .5); }
 .cap .sub { color: #d9dbe0; text-shadow: 0 1px 14px rgb(0 0 0 / .7); }
 .time { display: inline-flex; align-items: center; gap: .6rem; font: 600 clamp(1rem, 1.5vw, 1.25rem)/1 var(--display); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; color: var(--red); }
@@ -89,9 +90,9 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 22px; margin-top: 6px; }
 /* status row: the box reporting in */
 .status { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
-.status li { display: inline-flex; align-items: center; gap: .5rem; padding: 9px 14px 9px 12px; border-radius: 999px; background: rgb(8 9 11 / .6); border: 1px solid var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font: 500 .9rem/1 var(--body); white-space: nowrap; }
+.status li { display: inline-flex; align-items: center; gap: .5rem; padding: 9px 14px 9px 12px; border-radius: 999px; background: rgb(255 255 255 / .12); border: 1px solid rgb(255 255 255 / .24); box-shadow: inset 0 1px 0 rgb(255 255 255 / .22); font: 500 .9rem/1 var(--body); white-space: nowrap; }
 .status li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
-.status li span { color: var(--soft); }
+.status li span { color: rgb(255 255 255 / .7); }
 .status .off::before { background: var(--red); }
 .status .warn::before { background: var(--amber); }
 .status .flash::before { background: linear-gradient(90deg, var(--blue) 50%, var(--red) 50%); }
@@ -107,18 +108,17 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 @media (prefers-reduced-motion: no-preference) {
   html.js .scene .shot { transform: scale(1.09); transition: transform 2.6s var(--ease); }
   html.js .scene.in .shot { transform: none; }
-  html.js .cap > * { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-  html.js .cap > :nth-child(2) { transition-delay: 70ms; } html.js .cap > :nth-child(3) { transition-delay: 140ms; } html.js .cap > :nth-child(4) { transition-delay: 210ms; }
-  html.js .scene.in .cap > * { opacity: 1; transform: none; }
+  html.js .pane { opacity: 0; transform: translateY(26px) scale(.98); transform-origin: 0 100%; transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  html.js .scene.in .pane { opacity: 1; transform: none; }
   html.js .rv { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: calc(var(--d, 0) * 80ms); }
   html.js .rv.in { opacity: 1; transform: none; }
 }
 
 
 /* time rail: where you are in the night */
-.rail { position: fixed; z-index: 35; right: max(18px, env(safe-area-inset-right, 0px)); top: 50%; translate: 0 -50%; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 300ms ease; }
+.rail { position: fixed; z-index: 35; right: max(18px, env(safe-area-inset-right, 0px)); top: 50%; translate: 0 -50%; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 16px; align-items: flex-end; padding: 16px 14px; border-radius: 22px; opacity: 0; pointer-events: none; transition: opacity 300ms ease; }
 .rail.show { opacity: 1; }
-.rail li { display: flex; align-items: center; gap: 10px; font: 600 .78rem/1 var(--display); font-variant-numeric: tabular-nums; color: rgb(255 255 255 / .55); text-shadow: 0 1px 8px rgb(0 0 0 / .8); transition: color 250ms ease; }
+.rail li { display: flex; align-items: center; gap: 10px; font: 600 .78rem/1 var(--display); font-variant-numeric: tabular-nums; color: rgb(255 255 255 / .62); transition: color 250ms ease; }
 .rail li::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: rgb(255 255 255 / .45); transition: background-color 250ms ease, scale 250ms var(--ease), box-shadow 250ms ease; }
 .rail li.on { color: #fff; }
 .rail li.on::after { background: var(--red-btn); scale: 1.5; box-shadow: 0 0 0 4px rgb(225 32 44 / .3); }
@@ -141,17 +141,20 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 .chips legend { padding: 0; margin-bottom: 12px; font: 500 .9rem/1.2 var(--body); color: var(--soft); }
 .chip { position: relative; cursor: pointer; }
 .chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
-.chip span { display: inline-flex; align-items: center; min-height: 42px; padding: 0 16px; border-radius: 999px; border: 1px solid rgb(255 255 255 / .22); font: 500 .95rem/1 var(--body); transition: background-color 140ms ease, border-color 140ms ease, transform 140ms var(--ease); }
-.chip input:checked + span { background: var(--red-btn); border-color: var(--red-btn); }
+.chip span { display: inline-flex; align-items: center; min-height: 42px; padding: 0 16px; border-radius: 999px; background: rgb(255 255 255 / .08); box-shadow: inset 0 1px 0 rgb(255 255 255 / .18); border: 1px solid rgb(255 255 255 / .22); font: 500 .95rem/1 var(--body); transition: background-color 140ms ease, border-color 140ms ease, transform 140ms var(--ease); }
+.chip input:checked + span { background: rgb(225 32 44 / .85); border-color: rgb(255 120 128 / .7); }
 .chip input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
 .chip:active span { transform: scale(.96); }
 .more { grid-column: 1 / -1; }
 .more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 32px; color: var(--soft); font-size: .95rem; text-decoration: underline; text-underline-offset: 3px; }
 .more summary::-webkit-details-marker { display: none; }
-.more textarea { width: 100%; margin-top: 10px; min-height: 84px; padding: 13px 14px; font: 400 1rem/1.4 var(--body); color: var(--ink); background: var(--bg); border: 1px solid rgb(255 255 255 / .18); border-radius: 12px; resize: vertical; }
+.more textarea { width: 100%; margin-top: 10px; min-height: 84px; padding: 13px 14px; font: 400 1rem/1.4 var(--body); color: var(--ink); background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .2); border-radius: 14px; resize: vertical; }
 .more textarea:focus-visible { outline: none; border-color: var(--red); }
 
-section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; }
+section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; overflow: clip; }
+section.sec::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(38% 44% at 10% 28%, rgb(43 107 255 / .26), transparent 70%), radial-gradient(34% 42% at 90% 72%, rgb(225 32 44 / .2), transparent 70%); }
+section.sec > .wrap { position: relative; z-index: 2; }
+.real::before { transform: scaleX(-1); }
 
 /* the box */
 .box { text-align: center; overflow: hidden; }
@@ -160,8 +163,8 @@ section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; }
 .box-stage::before { content: ""; position: absolute; left: 50%; top: 50%; width: min(900px, 90vw); aspect-ratio: 1; translate: -50% -50%; background: radial-gradient(closest-side, rgb(43 107 255 / .2), rgb(225 32 44 / .1) 55%, transparent 72%); pointer-events: none; }
 .box-stage figure { position: relative; margin: 0; }
 .box-stage img { width: 100%; filter: drop-shadow(0 40px 50px rgb(0 0 0 / .6)); }
-.facts { position: relative; display: flex; flex-direction: column; gap: clamp(40px, 7vw, 96px); margin: 0; padding: 0; list-style: none; }
-.facts li { display: flex; flex-direction: column; gap: 8px; }
+.facts { position: relative; display: flex; flex-direction: column; gap: clamp(16px, 4vw, 56px); margin: 0; padding: 0; list-style: none; }
+.facts li { display: flex; flex-direction: column; gap: 8px; padding: clamp(18px, 2vw, 26px); border-radius: 26px; }
 .facts.l { text-align: right; align-items: flex-end; } .facts.l li { align-items: flex-end; }
 .facts.r { text-align: left; }
 .facts b { font: 700 clamp(1.75rem, 3.2vw, 3rem)/1 var(--display); letter-spacing: -0.04em; }
@@ -174,17 +177,17 @@ section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; }
 .real .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 7vw, 112px); align-items: center; }
 .real figure { margin: 0; position: relative; }
 .real figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 42%; border-radius: 24px; }
-.tag { position: absolute; left: 16px; bottom: 16px; padding: 9px 14px; border-radius: 999px; background: rgb(8 9 11 / .7); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid var(--line); font: 500 .9rem/1 var(--body); }
-.steps { margin: clamp(32px, 4vw, 56px) 0 0; padding: 0; list-style: none; counter-reset: s; border-top: 1px solid var(--line); }
-.steps li { counter-increment: s; display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); align-items: baseline; padding: clamp(18px, 2.2vw, 28px) 0; border-bottom: 1px solid var(--line); font: 600 clamp(1.35rem, 2.4vw, 2.1rem)/1.1 var(--display); letter-spacing: -0.03em; }
+.tag { position: absolute; left: 16px; bottom: 16px; padding: 10px 16px; border-radius: 999px; background: rgb(255 255 255 / .14); -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); border: 1px solid rgb(255 255 255 / .3); box-shadow: inset 0 1px 0 rgb(255 255 255 / .3); font: 500 .9rem/1 var(--body); }
+.steps { margin: clamp(32px, 4vw, 56px) 0 0; padding: 0; list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 10px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); align-items: baseline; padding: clamp(18px, 2.2vw, 26px) clamp(20px, 2.4vw, 30px); border-radius: 24px; font: 600 clamp(1.35rem, 2.4vw, 2.1rem)/1.1 var(--display); letter-spacing: -0.03em; }
 .steps li::before { content: "0" counter(s); font-size: .55em; font-weight: 600; letter-spacing: 0; color: var(--red); font-variant-numeric: tabular-nums; }
 .real .sub { margin-top: 24px; }
 
 /* questions */
 .faq-wrap { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(28px, 6vw, 96px); align-items: start; }
-.faq { border-top: 1px solid var(--line); }
-.faq details { border-bottom: 1px solid var(--line); }
-.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 0; font: 600 clamp(1.15rem, 1.7vw, 1.4rem)/1.25 var(--display); letter-spacing: -0.02em; }
+.faq { display: flex; flex-direction: column; gap: 10px; }
+.faq details { border-radius: 24px; padding-inline: clamp(20px, 2.4vw, 30px); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 22px 0; font: 600 clamp(1.15rem, 1.7vw, 1.4rem)/1.25 var(--display); letter-spacing: -0.02em; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after { content: ""; flex: none; width: 16px; height: 16px; background: linear-gradient(var(--red), var(--red)) center / 100% 2px no-repeat, linear-gradient(var(--red), var(--red)) center / 2px 100% no-repeat; transition: transform 200ms var(--ease); }
 .faq details[open] summary::after { transform: rotate(45deg); }
@@ -192,16 +195,16 @@ section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; }
 
 /* closing */
 .close { overflow: hidden; background: #050608; border-top: 1px solid var(--line); }
-.close .wash { --w: .32; --wx: 18%; --wy: 28%; mix-blend-mode: normal; }
+.close .wash { --w: .5; --wx: 18%; --wy: 28%; mix-blend-mode: normal; }
 .close .wrap { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
 .close-copy { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
 .close h2 { max-width: 11ch; }
 .close h2 em { font-style: normal; color: var(--red); }
-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: clamp(20px, 3vw, 36px); border-radius: 24px; background: rgb(16 18 22 / .86); border: 1px solid var(--line); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: clamp(20px, 3vw, 36px); border-radius: 32px; }
 .f { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .f.full { grid-column: 1 / -1; }
 .f label { font: 500 .9rem/1.2 var(--body); color: var(--soft); }
-.f input, .f select, .f textarea { width: 100%; min-height: 50px; padding: 13px 14px; font: 400 1rem/1.4 var(--body); color: var(--ink); background: var(--bg); border: 1px solid rgb(255 255 255 / .18); border-radius: 12px; transition: border-color 150ms ease; }
+.f input, .f select, .f textarea { width: 100%; min-height: 50px; padding: 13px 14px; font: 400 1rem/1.4 var(--body); color: var(--ink); background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .2); border-radius: 14px; transition: border-color 150ms ease; }
 .f textarea { min-height: 96px; resize: vertical; }
 .f input:focus-visible, .f select:focus-visible, .f textarea:focus-visible { outline: none; border-color: var(--red); }
 .f ::placeholder { color: #6d7178; }
@@ -211,6 +214,24 @@ form .btn { grid-column: 1 / -1; }
 footer { border-top: 1px solid var(--line); color: var(--soft); font-size: .92rem; }
 footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-block: 28px calc(28px + env(safe-area-inset-bottom, 0px)); }
 footer .mark { color: var(--ink); font-size: 1.15rem; }
+
+/* glass: one recipe for every floating surface. Frosted, lit along the top edge. */
+.nav, .pane, .rail, .ghost, .facts li, .steps li, .faq details, form {
+  background: linear-gradient(160deg, rgb(255 255 255 / .16), rgb(255 255 255 / .05) 60%);
+  border: 1px solid rgb(255 255 255 / .22);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), inset 0 -1px 0 rgb(255 255 255 / .05), 0 24px 60px rgb(0 0 0 / .38);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6);
+}
+.pane { background: linear-gradient(160deg, rgb(255 255 255 / .16), rgb(10 12 18 / .28) 70%); }
+.facts li::before { box-shadow: 0 0 14px rgb(225 32 44 / .8); }
+@media (hover: hover) and (pointer: fine) {
+  .facts li, .steps li, .faq details { transition: border-color 200ms ease, transform 300ms var(--ease); }
+  .facts li:hover, .steps li:hover { transform: translateY(-3px); border-color: rgb(255 255 255 / .4); }
+  .faq details:hover { border-color: rgb(255 255 255 / .4); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .nav, .pane, .rail, .ghost, .facts li, .steps li, .faq details, form, .glass { background: rgb(16 18 22 / .96); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
 
 @media (max-width: 900px) {
   :root { --nav: 60px; }
@@ -228,8 +249,10 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   .faq details p { padding-right: 0; }
 }
 @media (max-width: 700px) {
-  .scene::after { background: linear-gradient(0deg, rgb(8 9 11 / .96) 0%, rgb(8 9 11 / .78) 30%, rgb(8 9 11 / 0) 62%), linear-gradient(180deg, rgb(8 9 11 / .6) 0%, rgb(8 9 11 / 0) 16%); }
-  .cap { padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
+  .scene::after { background: linear-gradient(0deg, rgb(8 9 11 / .7) 0%, rgb(8 9 11 / .3) 30%, rgb(8 9 11 / 0) 56%), linear-gradient(180deg, rgb(8 9 11 / .55) 0%, rgb(8 9 11 / 0) 16%); }
+  .cap { padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); padding-inline: max(12px, env(safe-area-inset-left, 0px)) max(12px, env(safe-area-inset-right, 0px)); }
+  .pane { width: 100%; }
+  .nav .wrap { padding-left: 18px; }
   .status li { padding: 8px 12px 8px 10px; font-size: .84rem; }
   .btn { min-height: 50px; }
 }
@@ -264,52 +287,52 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 <div class="reel">
   <div class="scene in" style="--ox:83%">
     <picture><source media="(max-width: 700px)" srcset="assets/scene-dusk-sm.webp"><img class="shot" src="assets/scene-dusk.webp" width="2400" height="1357" fetchpriority="high" alt="A SentryBox mounted on a temporary power pole at dusk, overlooking a wood-framed house under construction, its blue and red light bars lit"></picture>
-    <div class="wrap cap">
+    <div class="wrap cap"><div class="pane">
       <h1>Secure your jobsite from anywhere.</h1>
       <p class="sub">Cameras, internet and police-style strobes. In one box.</p>
       <div class="actions">
         <a class="btn" href="#quote">Get a quote</a>
         <a class="ghost" href="#night">Watch a night on site</a>
       </div>
-    </div>
+    </div></div>
   </div>
 
   <span id="night"></span>
   <section class="scene" style="--ox:83%" aria-label="2:14 AM">
     <picture><source media="(max-width: 700px)" srcset="assets/scene-strobes-sm.webp"><img class="shot" src="assets/scene-strobes.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="At night a pickup truck pulls up to the construction site while the SentryBox floods the fence, lumber and framing with red and blue light"></picture>
     <div class="wash" style="--wx:80%;--wy:28%" aria-hidden="true"><i></i><i></i></div>
-    <div class="wrap cap">
+    <div class="wrap cap"><div class="pane">
       <p class="time">2:14 AM</p>
       <h2>They see the lights first.</h2>
       <ul class="status"><li class="flash"><span>Strobes</span> Flashing</li><li><span>Cameras</span> Online</li></ul>
-    </div>
+    </div></div>
   </section>
 
   <section class="scene" style="--ox:80%" aria-label="2:15 AM">
     <picture><source media="(max-width: 700px)" srcset="assets/scene-powercut-sm.webp"><img class="shot" src="assets/scene-powercut.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="Close view of the SentryBox on its pole with a severed power cable hanging below it. The site behind is dark but the box is still lit"></picture>
-    <div class="wrap cap">
+    <div class="wrap cap"><div class="pane">
       <p class="time">2:15 AM</p>
       <h2>Power cut. Still running.</h2>
       <ul class="status"><li class="off"><span>Site power</span> Cut</li><li class="warn"><span>Battery</span> 30+ min</li><li><span>Cameras</span> Online</li></ul>
-    </div>
+    </div></div>
   </section>
 
   <section class="scene" style="--ox:78%" aria-label="2:16 AM">
     <picture><source media="(max-width: 700px)" srcset="assets/scene-phone-sm.webp"><img class="shot" src="assets/scene-phone.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="A hand holding a phone in a dark bedroom. The screen shows a live camera view of the jobsite with the truck at the fence"></picture>
-    <div class="wrap cap">
+    <div class="wrap cap"><div class="pane">
       <p class="time">2:16 AM</p>
       <h2>You're watching it live.</h2>
       <ul class="status"><li><span>Built-in 4G LTE</span> Connected</li><li><span>Site Wi-Fi</span> Not needed</li></ul>
-    </div>
+    </div></div>
   </section>
 
   <section class="scene" style="--ox:83%" aria-label="6:00 AM">
     <picture><source media="(max-width: 700px)" srcset="assets/scene-sunrise-sm.webp"><img class="shot" src="assets/scene-sunrise.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="Sunrise at the same jobsite. Two workers walk in, the lumber and trailer are untouched, and the SentryBox is still on its pole"></picture>
-    <div class="wrap cap">
+    <div class="wrap cap"><div class="pane">
       <p class="time">6:00 AM</p>
       <h2>Everything's still there.</h2>
       <div class="actions"><a class="btn" href="#quote">Get a quote</a></div>
-    </div>
+    </div></div>
   </section>
 </div>
 

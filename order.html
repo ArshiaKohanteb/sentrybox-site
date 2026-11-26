@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#08090b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800&family=Instrument+Serif:ital@1&family=Figtree:wght@400;500;600&display=swap">
 <style>
 /* Same world as the home page: dark, one red, one type system. This page is a picker: three choices,
    a running summary at the bottom, then what happens after you ask for a quote. */
@@ -39,6 +39,8 @@ p { margin: 0; text-wrap: pretty; }
 :focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .wrap { max-width: 1320px; margin-inline: auto; padding-left: max(var(--side), env(safe-area-inset-left, 0px)); padding-right: max(var(--side), env(safe-area-inset-right, 0px)); }
 h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin: 0; text-wrap: balance; }
+h1, h2 { font-weight: 800; text-transform: uppercase; letter-spacing: -0.035em; line-height: .96; }
+h1 em, h2 em { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -0.015em; font-size: 1.16em; line-height: .86; color: var(--red); }
 h1 { font-size: clamp(2.75rem, 6.6vw, 6rem); }
 h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); }
 h3 { font-size: clamp(1.35rem, 2vw, 1.75rem); letter-spacing: -0.03em; line-height: 1.1; }
@@ -148,7 +150,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 <div class="top">
   <div class="wrap">
     <div class="top-copy">
-      <h1>Build your box.</h1>
+      <h1>Build <em>your box.</em></h1>
       <p class="sub">Three choices. We build it, set it up and send it ready to go.</p>
     </div>
     <figure><img src="assets/sentrybox-cut.webp" width="1417" height="1372" alt="SentryBox: a grey weatherproof enclosure with cameras around it and blue and red light bars on the front"></figure>
@@ -234,7 +236,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 
 <section class="next">
   <div class="wrap">
-    <h2>What happens next.</h2>
+    <h2>What happens <em>next.</em></h2>
     <ol class="flow">
       <li><h3>Send your picks</h3><p>Tell us about the site.</p></li>
       <li><h3>We quote it</h3><p>Pricing and availability for your setup.</p></li>

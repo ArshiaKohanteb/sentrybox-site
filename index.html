@@ -34,6 +34,7 @@
   --green: #35c97a;
   --amber: #f5b21a;
   --display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --body: "Figtree", "Helvetica Neue", Arial, sans-serif;
   --side: clamp(20px, 5.5vw, 88px);
   --nav: 68px;
@@ -50,9 +51,14 @@ p { margin: 0; text-wrap: pretty; }
 :focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .wrap { max-width: 1320px; margin-inline: auto; padding-left: max(var(--side), env(safe-area-inset-left, 0px)); padding-right: max(var(--side), env(safe-area-inset-right, 0px)); }
 
-h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin: 0; text-wrap: balance; }
-h1 { font-size: clamp(2.75rem, 6.6vw, 6rem); }
-h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; letter-spacing: -0.035em; line-height: .96; margin: 0; text-wrap: balance; text-transform: uppercase; }
+h1 { font-size: clamp(2.9rem, 7vw, 6.75rem); }
+h2 { font-size: clamp(2.4rem, 5.6vw, 5rem); }
+/* the accent voice: one phrase per headline drops into red serif italics */
+h1 em, h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -0.015em; font-size: 1.16em; line-height: .86; color: var(--red); }
+/* each word rides up out of its own slot */
+.w { display: inline-block; overflow: hidden; vertical-align: bottom; padding: .08em .09em .16em; margin: -.08em -.09em -.16em; }
+.w > * { display: inline-block; }
 .sub { font-size: clamp(1.0625rem, 1.5vw, 1.3rem); line-height: 1.45; color: var(--soft); max-width: 30rem; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 52px; padding: 0 26px; border: 0; border-radius: 999px; background: var(--red-btn); color: #fff; font: 600 1.0625rem/1 var(--body); text-decoration: none; cursor: pointer; transition: background-color 160ms ease, transform 160ms var(--ease); }
@@ -79,11 +85,11 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 /* the reel: five full-screen pictures. Each one sticks, and the next slides up over it. */
 .scene { position: sticky; top: 0; height: 100svh; min-height: 520px; overflow: hidden; display: flex; align-items: flex-end; background: var(--bg); box-shadow: 0 -40px 80px rgb(0 0 0 / .65); }
 .scene picture, .scene .shot { position: absolute; inset: 0; width: 100%; height: 100%; }
-.scene .shot { object-fit: cover; object-position: var(--ox, 50%) 50%; transform-origin: var(--ox, 50%) 35%; }
-.scene::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgb(8 9 11 / .6) 0%, rgb(8 9 11 / .2) 24%, rgb(8 9 11 / 0) 46%), linear-gradient(90deg, rgb(8 9 11 / .3) 0%, rgb(8 9 11 / 0) 50%), linear-gradient(180deg, rgb(8 9 11 / .5) 0%, rgb(8 9 11 / 0) 18%); }
-.cap { position: relative; z-index: 2; width: 100%; padding-block: 0 clamp(28px, 6vh, 64px); }
-.pane { width: fit-content; max-width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: clamp(14px, 2vh, 22px); padding: clamp(22px, 3vw, 44px); border-radius: clamp(26px, 3vw, 40px); }
-.cap h1, .cap h2 { max-width: 13ch; text-shadow: 0 2px 30px rgb(0 0 0 / .5); }
+.scene .shot { object-fit: cover; object-position: var(--ox, 50%) var(--oy, 50%); transform-origin: var(--ox, 50%) 35%; }
+.scene::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgb(8 9 11 / .9) 0%, rgb(8 9 11 / .5) 24%, rgb(8 9 11 / 0) 50%), linear-gradient(90deg, rgb(8 9 11 / .62) 0%, rgb(8 9 11 / 0) 52%), linear-gradient(180deg, rgb(8 9 11 / .5) 0%, rgb(8 9 11 / 0) 16%); }
+.cap { position: relative; z-index: 2; width: 100%; padding-block: 0 clamp(36px, 7vh, 80px); }
+.pane { width: fit-content; max-width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: clamp(14px, 2vh, 22px); }
+.cap h1, .cap h2 { max-width: 12ch; text-shadow: 0 2px 30px rgb(0 0 0 / .5); }
 .cap .sub { color: #d9dbe0; text-shadow: 0 1px 14px rgb(0 0 0 / .7); }
 .time { display: inline-flex; align-items: center; gap: .6rem; font: 600 clamp(1rem, 1.5vw, 1.25rem)/1 var(--display); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; color: var(--red); }
 .time::before { content: ""; width: .5em; height: .5em; border-radius: 50%; background: var(--red-btn); box-shadow: 0 0 0 4px rgb(225 32 44 / .25); }
@@ -108,8 +114,11 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 @media (prefers-reduced-motion: no-preference) {
   html.js .scene .shot { transform: scale(1.09); transition: transform 2.6s var(--ease); }
   html.js .scene.in .shot { transform: none; }
-  html.js .pane { opacity: 0; transform: translateY(26px) scale(.98); transform-origin: 0 100%; transition: opacity .7s var(--ease), transform .7s var(--ease); }
-  html.js .scene.in .pane { opacity: 1; transform: none; }
+  html.js .pane > :not(h1):not(h2) { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease) .35s, transform .7s var(--ease) .35s; }
+  html.js .scene.in .pane > * { opacity: 1; transform: none; }
+  html.js .w > * { transform: translateY(115%) rotate(5deg); transform-origin: 0 100%; transition: transform .95s var(--ease); transition-delay: calc(var(--i, 0) * 75ms + 60ms); }
+  html.js .in .w > *, html.js .in.split .w > * { transform: none; }
+  html.js h2.rv.split { opacity: 1; transform: none; }
   html.js .rv { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: calc(var(--d, 0) * 80ms); }
   html.js .rv.in { opacity: 1; transform: none; }
 }
@@ -129,6 +138,7 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 .solar .wrap { position: relative; width: 100%; padding-block: calc(var(--nav) + 24px) 48px; }
 .glass { width: min(480px, 100%); display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding: clamp(24px, 3vw, 44px); border-radius: 32px; background: linear-gradient(160deg, rgb(12 26 60 / .5), rgb(12 26 60 / .3)); border: 1px solid rgb(255 255 255 / .42); box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 30px 60px rgb(6 20 60 / .28); -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); color: #fff; }
 .glass .sub { color: rgb(255 255 255 / .86); }
+.glass h2 em { color: #fff; }
 .glass ul { width: 100%; margin: 4px 0; padding: 0; list-style: none; border-top: 1px solid rgb(255 255 255 / .3); }
 .glass li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgb(255 255 255 / .3); }
 .glass li b { font: 600 1.15rem/1.2 var(--display); letter-spacing: -0.02em; }
@@ -146,12 +156,19 @@ h2 { font-size: clamp(2.25rem, 5.2vw, 4.5rem); }
 .chip input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
 .chip:active span { transform: scale(.96); }
 .more { grid-column: 1 / -1; }
-.picks { grid-column: 1 / -1; padding: 12px 16px; border-radius: 14px; background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .18); font-size: .95rem; }
 [hidden] { display: none !important; }
 .more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 32px; color: var(--soft); font-size: .95rem; text-decoration: underline; text-underline-offset: 3px; }
 .more summary::-webkit-details-marker { display: none; }
 .more textarea { width: 100%; margin-top: 10px; min-height: 84px; padding: 13px 14px; font: 400 1rem/1.4 var(--body); color: var(--ink); background: rgb(255 255 255 / .07); border: 1px solid rgb(255 255 255 / .2); border-radius: 14px; resize: vertical; }
 .more textarea:focus-visible { outline: none; border-color: var(--red); }
+
+/* ticker: the spec sheet, moving */
+.ticker { overflow: hidden; padding-block: clamp(22px, 3.4vw, 44px); border-block: 1px solid var(--line); background: #050608; }
+.ticker div { display: flex; width: max-content; gap: clamp(28px, 4vw, 64px); padding-right: clamp(28px, 4vw, 64px); animation: tick 36s linear infinite; }
+.ticker span { display: inline-flex; align-items: center; gap: clamp(28px, 4vw, 64px); font: 800 clamp(2rem, 5vw, 4.25rem)/1 var(--display); letter-spacing: -0.035em; text-transform: uppercase; white-space: nowrap; color: transparent; -webkit-text-stroke: 1.5px rgb(255 255 255 / .55); }
+.ticker span::after { content: ""; width: .32em; height: .32em; border-radius: 50%; background: var(--red-btn); box-shadow: .5em 0 0 var(--blue); margin-right: .5em; }
+.ticker em { font: italic 400 1.14em/1 var(--serif); letter-spacing: -0.01em; text-transform: none; color: var(--red); -webkit-text-stroke: 0; }
+@keyframes tick { to { transform: translateX(-50%); } }
 
 section.sec { padding-block: clamp(88px, 13vw, 176px); position: relative; overflow: clip; }
 section.sec::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(38% 44% at 10% 28%, rgb(43 107 255 / .26), transparent 70%), radial-gradient(34% 42% at 90% 72%, rgb(225 32 44 / .2), transparent 70%); }
@@ -160,7 +177,7 @@ section.sec > .wrap { position: relative; z-index: 2; }
 
 /* the box */
 .box { text-align: center; overflow: hidden; }
-.box h2 { margin-inline: auto; max-width: 14ch; }
+.box h2 { margin-inline: auto; max-width: 12ch; }
 .box-stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; gap: clamp(16px, 3vw, 48px); margin-top: clamp(40px, 6vw, 80px); }
 .box-stage::before { content: ""; position: absolute; left: 50%; top: 50%; width: min(900px, 90vw); aspect-ratio: 1; translate: -50% -50%; background: radial-gradient(closest-side, rgb(43 107 255 / .2), rgb(225 32 44 / .1) 55%, transparent 72%); pointer-events: none; }
 .box-stage figure { position: relative; margin: 0; }
@@ -201,8 +218,7 @@ section.sec > .wrap { position: relative; z-index: 2; }
 .close .wrap { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
 .close-copy { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
 /* the closing line keeps the loud voice: heavy capitals, then the threat in red serif italics */
-.close h2 { max-width: 12ch; font-weight: 800; font-size: clamp(2.5rem, 5.4vw, 4.75rem); line-height: .98; letter-spacing: -0.03em; text-transform: uppercase; }
-.close h2 em { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: -0.01em; font-size: 1.16em; line-height: .9; color: var(--red); }
+.close h2 { max-width: 12ch; }
 .ticks { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .ticks li { display: flex; align-items: center; gap: 12px; font-weight: 500; }
 .ticks li::before { content: ""; flex: none; width: 22px; height: 22px; border-radius: 50%; background: rgb(225 32 44 / .18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff3b47' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 14px no-repeat; }
@@ -222,13 +238,12 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
 footer .mark { color: var(--ink); font-size: 1.15rem; }
 
 /* glass: one recipe for every floating surface. Frosted, lit along the top edge. */
-.nav, .pane, .rail, .ghost, .facts li, .steps li, .faq details, form {
+.nav, .rail, .ghost, .facts li, .steps li, .faq details, form {
   background: linear-gradient(160deg, rgb(255 255 255 / .16), rgb(255 255 255 / .05) 60%);
   border: 1px solid rgb(255 255 255 / .22);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), inset 0 -1px 0 rgb(255 255 255 / .05), 0 24px 60px rgb(0 0 0 / .38);
   -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6);
 }
-.pane { background: linear-gradient(160deg, rgb(255 255 255 / .16), rgb(10 12 18 / .28) 70%); }
 .facts li::before { box-shadow: 0 0 14px rgb(225 32 44 / .8); }
 @media (hover: hover) and (pointer: fine) {
   .facts li, .steps li, .faq details { transition: border-color 200ms ease, transform 300ms var(--ease); }
@@ -255,9 +270,8 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
   .faq details p { padding-right: 0; }
 }
 @media (max-width: 700px) {
-  .scene::after { background: linear-gradient(0deg, rgb(8 9 11 / .7) 0%, rgb(8 9 11 / .3) 30%, rgb(8 9 11 / 0) 56%), linear-gradient(180deg, rgb(8 9 11 / .55) 0%, rgb(8 9 11 / 0) 16%); }
-  .cap { padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); padding-inline: max(12px, env(safe-area-inset-left, 0px)) max(12px, env(safe-area-inset-right, 0px)); }
-  .pane { width: 100%; }
+  .scene::after { background: linear-gradient(0deg, rgb(8 9 11 / .95) 0%, rgb(8 9 11 / .72) 28%, rgb(8 9 11 / 0) 60%), linear-gradient(180deg, rgb(8 9 11 / .55) 0%, rgb(8 9 11 / 0) 16%); }
+  .cap { padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px)); }
   .nav .wrap { padding-left: 18px; }
   .status li { padding: 8px 12px 8px 10px; font-size: .84rem; }
   .btn { min-height: 50px; }
@@ -266,6 +280,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .wash i { animation: none; }
+  .ticker div { animation: none; }
   .wash { display: none; }
   .btn, .ghost::after, .faq summary::after, .chip span, .rail, .rail li, .rail li::after { transition: none; }
 }
@@ -291,10 +306,10 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 <ol class="rail" id="rail" aria-hidden="true"><li>Dusk</li><li>2:14</li><li>2:15</li><li>2:16</li><li>6:00</li></ol>
 
 <div class="reel">
-  <div class="scene in" style="--ox:83%">
+  <div class="scene in" style="--ox:83%;--oy:0%">
     <picture><source media="(max-width: 700px)" srcset="assets/scene-dusk-sm.webp"><img class="shot" src="assets/scene-dusk.webp" width="2400" height="1357" fetchpriority="high" alt="A SentryBox mounted on a temporary power pole at dusk, overlooking a wood-framed house under construction, its blue and red light bars lit"></picture>
     <div class="wrap cap"><div class="pane">
-      <h1>Secure your jobsite from anywhere.</h1>
+      <h1>Secure your jobsite <em>from anywhere.</em></h1>
       <p class="sub">Cameras, internet and police-style strobes. In one box.</p>
       <div class="actions">
         <a class="btn" href="#quote">Get a quote</a>
@@ -309,7 +324,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     <div class="wash" style="--wx:80%;--wy:28%" aria-hidden="true"><i></i><i></i></div>
     <div class="wrap cap"><div class="pane">
       <p class="time">2:14 AM</p>
-      <h2>They see the lights first.</h2>
+      <h2>They see the <em>lights first.</em></h2>
       <ul class="status"><li class="flash"><span>Strobes</span> Flashing</li><li><span>Cameras</span> Online</li></ul>
     </div></div>
   </section>
@@ -318,7 +333,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     <picture><source media="(max-width: 700px)" srcset="assets/scene-powercut-sm.webp"><img class="shot" src="assets/scene-powercut.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="Close view of the SentryBox on its pole with a severed power cable hanging below it. The site behind is dark but the box is still lit"></picture>
     <div class="wrap cap"><div class="pane">
       <p class="time">2:15 AM</p>
-      <h2>Power cut. Still running.</h2>
+      <h2>Power cut. <em>Still running.</em></h2>
       <ul class="status"><li class="off"><span>Site power</span> Cut</li><li class="warn"><span>Battery</span> 30+ min</li><li><span>Cameras</span> Online</li></ul>
     </div></div>
   </section>
@@ -327,7 +342,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     <picture><source media="(max-width: 700px)" srcset="assets/scene-phone-sm.webp"><img class="shot" src="assets/scene-phone.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="A hand holding a phone in a dark bedroom. The screen shows a live camera view of the jobsite with the truck at the fence"></picture>
     <div class="wrap cap"><div class="pane">
       <p class="time">2:16 AM</p>
-      <h2>You're watching it live.</h2>
+      <h2>You're watching <em>it live.</em></h2>
       <ul class="status"><li><span>Built-in 4G LTE</span> Connected</li><li><span>Site Wi-Fi</span> Not needed</li></ul>
     </div></div>
   </section>
@@ -336,17 +351,19 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
     <picture><source media="(max-width: 700px)" srcset="assets/scene-sunrise-sm.webp"><img class="shot" src="assets/scene-sunrise.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="Sunrise at the same jobsite. Two workers walk in, the lumber and trailer are untouched, and the SentryBox is still on its pole"></picture>
     <div class="wrap cap"><div class="pane">
       <p class="time">6:00 AM</p>
-      <h2>Everything's still there.</h2>
+      <h2>Everything's <em>still there.</em></h2>
       <div class="actions"><a class="btn" href="#quote">Get a quote</a></div>
     </div></div>
   </section>
 </div>
 
+<div class="ticker" aria-hidden="true"><div><span>Cameras</span><span><em>its own internet</em></span><span>Red + blue strobes</span><span><em>solar or power pole</em></span><span>IP67 sealed</span><span><em>watch from your phone</em></span><span>Cameras</span><span><em>its own internet</em></span><span>Red + blue strobes</span><span><em>solar or power pole</em></span><span>IP67 sealed</span><span><em>watch from your phone</em></span></div></div>
+
 <section class="solar" id="solar" aria-label="Solar option">
   <picture><source media="(max-width: 700px)" srcset="assets/scene-solar-sm.webp"><img class="shot" src="assets/scene-solar.webp" width="2400" height="1357" loading="lazy" decoding="async" alt="A SentryBox on a steel pole in daylight with a large solar panel mounted behind it against a blue sky"></picture>
   <div class="wrap">
     <div class="glass rv">
-      <h2>Runs on sun.</h2>
+      <h2>Runs <em>on sun.</em></h2>
       <p class="sub">No power on site? No problem.</p>
       <ul>
         <li><b>Solar</b><span>Works anywhere</span></li>
@@ -359,7 +376,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 
 <section class="sec box" id="box">
   <div class="wrap">
-    <h2 class="rv">Everything in one box.</h2>
+    <h2 class="rv">Everything <em>in one box.</em></h2>
     <div class="box-stage">
       <ul class="facts l">
         <li class="rv"><b>4G LTE</b><span>Its own internet. SIM and data plan included.</span></li>
@@ -383,7 +400,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
       <figcaption class="tag">On a live jobsite</figcaption>
     </figure>
     <div>
-      <h2 class="rv">Up in minutes.</h2>
+      <h2 class="rv">Up <em>in minutes.</em></h2>
       <ol class="steps">
         <li class="rv">Mount it out of reach</li>
         <li class="rv" style="--d:1">Connect power</li>
@@ -397,7 +414,7 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
 
 <section class="sec" id="questions" style="padding-top:0">
   <div class="wrap faq-wrap">
-    <h2 class="rv">Questions.</h2>
+    <h2 class="rv">Good <em>questions.</em></h2>
     <div class="faq rv">
       <details>
         <summary>Does it come with cameras?</summary>
@@ -453,7 +470,6 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
         <label class="chip"><input type="radio" name="sites" value="4 to 9"><span>4 to 9</span></label>
         <label class="chip"><input type="radio" name="sites" value="10 or more"><span>10 or more</span></label>
       </fieldset>
-      <p class="picks" id="picks" hidden></p>
       <input type="hidden" name="picks" id="picks-field">
       <details class="more">
         <summary>Add a note</summary>
@@ -496,11 +512,28 @@ footer .mark { color: var(--ink); font-size: 1.15rem; }
       .then(function () { btn.disabled = false; });
   });
 
-  // picks carried over from the options page: shown as one line and sent along, not asked again
+  // picks carried over from the options page: sent along quietly, not shown or asked again
   var q = new URLSearchParams(location.search);
   var PICK = { cams: { hd: '8 HD cameras', '4k': '4K cameras' }, power: { solar: 'Solar', pole: 'Power pole' }, battery: { 1: 'Battery backup' }, ai: { 1: 'AI detection' }, install: { 1: 'Installation' } };
   var picked = Object.keys(PICK).map(function (k) { return PICK[k][q.get(k)]; }).filter(Boolean);
-  if (picked.length) { $('picks-field').value = picked.join(', '); $('picks').textContent = 'Your picks: ' + picked.join(', '); $('picks').hidden = false; }
+  if (picked.length) { $('picks-field').value = picked.join(', '); }
+
+  // headlines: wrap each word so it can rise on its own; screen readers get the plain sentence
+  [].forEach.call(document.querySelectorAll('.cap h1, .cap h2, h2.rv, .glass h2'), function (h) {
+    var i = 0, out = document.createDocumentFragment();
+    h.setAttribute('aria-label', h.textContent.trim());
+    [].forEach.call(h.childNodes, function (n) {
+      var em = n.nodeType === 1 && n.tagName === 'EM';
+      n.textContent.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { out.appendChild(document.createTextNode(' ')); return; }
+        var w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+        var inner = document.createElement(em ? 'em' : 'span'); inner.textContent = part; inner.style.setProperty('--i', i++);
+        w.appendChild(inner); out.appendChild(w);
+      });
+    });
+    h.textContent = ''; h.appendChild(out); h.classList.add('split');
+  });
 
   var nav = $('nav');
   // the nav stays clear over the pictures and turns solid once the reel has passed
